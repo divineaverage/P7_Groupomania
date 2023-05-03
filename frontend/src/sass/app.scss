@@ -7,7 +7,8 @@
 	justify-content: center;
 	align-items: center;
 	width: 100vw;
-	height: 100vh 
+	height: 100vh;
+	flex-direction: column; 
 }
 
 .Auth-form {
@@ -36,4 +37,8 @@ label {
 	font-size: 14px;
 	font-weight: 600;
 	color: rgb(34, 34, 34) 
+}
+
+.logo {
+	width: 15%;
 }

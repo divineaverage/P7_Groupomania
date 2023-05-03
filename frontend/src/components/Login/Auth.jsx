@@ -1,5 +1,6 @@
 
-import React, { useState } from "react"
+import React, { useState } from "react";
+import logo from "../../assets/icon-above-font.svg"
 
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
@@ -11,6 +12,7 @@ export default function (props) {
   if (authMode === "signin") {
     return (
       <div className="Auth-form-container">
+          <img className="logo" src={logo} alt="Groupomania logo"></img>
         <form className="Auth-form">
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
@@ -91,7 +93,7 @@ export default function (props) {
             </button>
           </div>
           <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
+            <a href="#">Forgot password?</a>
           </p>
         </div>
       </form>
