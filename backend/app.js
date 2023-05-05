@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from "cors";
-import mongoose from 'mongoose';
+import user from "./models/users.js";
+import UsersController from "./controllers/users.js";
+// import mongoose from 'mongoose';
 // import user from "./models/users.js";
 // import UsersController from "./controllers/users.js";
 // import auth from './middleware/auth.js';
@@ -39,5 +41,24 @@ app.use((req, res, next) => {
   next();
 
 });
+
+//Sign up
+app.use("/api/auth/signup", UsersController.signup)
+
+//Login
+app.post("/api/auth/login", UsersController.login)
+
+app.post('/api/posts', function (req, res, next) {
+  var post = new user({
+    username: req.body.username,
+    password: req.body.body
+  })
+  post.post(function (err, post) {
+    if (err) { return next(err) }
+    res.json(201, post)
+  })
+})
+
+//
 
 export default app;
