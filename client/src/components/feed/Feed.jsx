@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useSelector, useDispatch, } from "react-redux"
 import PostCard from "./PostCard"
+import "../../sass/app.scss"
 
 import LoadIcon from "../../assets/loading.gif"
 import LoadMoreBtn from "../LoadMoreBtn"

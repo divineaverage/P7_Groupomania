@@ -1,9 +1,6 @@
 .Auth-form-container {
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	width: 100vw;
-	height: 100vh;
 	flex-direction: column; 
 }
 
@@ -11,7 +8,7 @@
 	width: 420px;
 	box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
 	padding-top: 30px;
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 	border-radius: 8px;
 	background-color: white 
 }
@@ -35,6 +32,9 @@ label {
 	color: rgb(34, 34, 34) 
 }
 
-.logo {
-	width: 15%;
+.title-bar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
 }
