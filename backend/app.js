@@ -1,34 +1,32 @@
 import express from 'express';
 import cors from "cors";
 import user from "./models/userModel.js";
-import userCtrl from "./controllers/userCtrl.js";
-// import mongoose from 'mongoose';
-// import user from "./models/users.js";
-// import userCtrl from "./controllers/users.js";
-// import auth from './middleware/auth.js';
-// import multer from './middleware/multer-config.js';
-// import path from "path";
-// import {fileURLToPath} from "url";
-// import {config} from "dotenv";
+import usersController from "./controllers/userCtrl.js";
+import mongoose from 'mongoose';
+import auth from './middleware/auth.js';
+import multer from './middleware/multer-config.js';
+import path from "path";
+import {fileURLToPath} from "url";
+import {config} from "dotenv";
 // import { createSauce, deleteSauce, getAllSauce, getOneSauce, likeSauce, modifySauce } from './controllers/sauces.js';
-// const {MONGODBURL} = config().parsed;
-// const __filename = fileURLToPath(import.meta.url);
+const {MONGODBURL} = config().parsed;
+const __filename = fileURLToPath(import.meta.url);
 export const app = express();
 
-// console.log(MONGODBURL);
+console.log(MONGODBURL);
 
 app.use(cors());
 app.use(express.json());
 
 
-// mongoose.connect(MONGODBURL)
-//   .then(() => {
-//     console.log('Successfully connected to MongoDB Atlas!');
-//   })
-//   .catch((error) => {
-//     console.log('Unable to connect to MongoDB Atlas!');
-//     console.error(error);
-//   });
+mongoose.connect(MONGODBURL)
+  .then(() => {
+    console.log('Successfully connected to MongoDB Atlas!');
+  })
+  .catch((error) => {
+    console.log('Unable to connect to MongoDB Atlas!');
+    console.error(error);
+  });
 
 app.use((req, res, next) => {
 
@@ -43,10 +41,10 @@ app.use((req, res, next) => {
 });
 
 //Sign up
-app.use("/api/auth/signup", userCtrl.signup)
+app.use("/api/auth/signup", usersController.signup)
 
 //Login
-app.post("/api/auth/login", userCtrl.login)
+app.post("/api/auth/login", usersController.login)
 
 app.post('/api/posts', function (req, res, next) {
   var post = new user({

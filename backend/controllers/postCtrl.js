@@ -1,4 +1,4 @@
-import Post from "../models/posts.js";
+import Post from "../models/postModel.js";
 import fs from "fs";
 
 // New post
