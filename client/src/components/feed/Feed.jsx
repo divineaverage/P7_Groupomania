@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { useSelector, useDispatch, } from "react-redux"
 import PostCard from "./PostCard"
 import "../../sass/app.scss"
+import NavBar from "../shared/Nav"
+import Footer from "../shared/Footer"
 
 import LoadIcon from "../../assets/loading.gif"
 import LoadMoreBtn from "../LoadMoreBtn"
@@ -28,6 +30,8 @@ const Posts = () => {
     }
 
     return (
+        <div className="post-page-container">
+            <NavBar></NavBar>
         <div className="posts">
             {
                 homePosts.posts.map(post => (
@@ -42,6 +46,8 @@ const Posts = () => {
             
             <LoadMoreBtn result={homePosts.result} page={homePosts.page}
             load={load} handleLoadMore={handleLoadMore} />
+        </div>
+        <Footer></Footer>
         </div>
     )
 }
