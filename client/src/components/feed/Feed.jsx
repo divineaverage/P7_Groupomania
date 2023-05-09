@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch, } from "react-redux"
 import PostCard from "./PostCard"
 
 import LoadIcon from "../../assets/loading.gif"

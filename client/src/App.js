@@ -11,9 +11,9 @@ function app() {
       <Routes>
         <Route path="/Auth" element={<Auth />} />
         <Route path="/">
-        <Route path="/createPost" element={<CreatePost />} />
+        {/* <Route path="/createPost" element={<CreatePost />} /> */}
         <Route path="/feed" element={<Feed />} />
-        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
