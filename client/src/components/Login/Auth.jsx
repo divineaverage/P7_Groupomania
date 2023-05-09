@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "../shared/Nav";
+import NavBar from "./AuthNav";
 import Footer from "../shared/Footer";
 import "./auth.scss";
 import "../../sass/app.scss"

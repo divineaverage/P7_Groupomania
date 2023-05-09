@@ -57,6 +57,12 @@ app.post('/api/posts', function (req, res, next) {
   })
 })
 
-//
+//Post functions
+app.post('/api/sauces', auth, multer, createPost);
+app.put('/api/sauces/:id', auth, multer, modifyPost);
+app.delete('/api/sauces/:id', auth, deletePost);
+app.get('/api/sauces/:id', auth, getOnePost);
+app.get('/api/sauces', auth, getAllPost);
+app.post('/api/sauces/:id/like', auth, likePost);
 
 export default app;
