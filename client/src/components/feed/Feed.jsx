@@ -4,9 +4,10 @@ import PostCard from "./PostCard"
 import "../../sass/app.scss"
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
+import PostButton from "./PostButton"
 
 import LoadIcon from "../../assets/loading.gif"
-import LoadMoreBtn from "../LoadMoreBtn"
+import LoadMoreBtn from "./LoadMoreBtn"
 import { getDataAPI } from "../../utils/fetchData"
 import { POST_TYPES } from "../../redux/actions/postAction"
 
@@ -32,6 +33,7 @@ const Posts = () => {
     return (
         <div className="post-page-container">
             <NavBar></NavBar>
+            <h1>Latest Posts</h1>
         <div className="posts">
             {
                 homePosts.posts.map(post => (
@@ -47,6 +49,7 @@ const Posts = () => {
             <LoadMoreBtn result={homePosts.result} page={homePosts.page}
             load={load} handleLoadMore={handleLoadMore} />
         </div>
+        <PostButton></PostButton>
         <Footer></Footer>
         </div>
     )
