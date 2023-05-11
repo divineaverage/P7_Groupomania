@@ -8,7 +8,7 @@ import multer from './middleware/multer-config.js';
 import path from "path";
 import {fileURLToPath} from "url";
 import {config} from "dotenv";
-// import { createSauce, deleteSauce, getAllSauce, getOneSauce, likeSauce, modifySauce } from './controllers/sauces.js';
+// import { createSauce, deleteSauce, getAllSauce, getOneSauce, likeSauce, modifySauce } from './controllers/feed.js';
 const {MONGODBURL} = config().parsed;
 const __filename = fileURLToPath(import.meta.url);
 export const app = express();
@@ -58,11 +58,11 @@ app.post('/api/posts', function (req, res, next) {
 })
 
 //Post functions
-app.post('/api/sauces', auth, multer, createPost);
-app.put('/api/sauces/:id', auth, multer, modifyPost);
-app.delete('/api/sauces/:id', auth, deletePost);
-app.get('/api/sauces/:id', auth, getOnePost);
-app.get('/api/sauces', auth, getAllPost);
-app.post('/api/sauces/:id/like', auth, likePost);
+app.post('/api/feed', auth, multer, createPost);
+app.put('/api/feed/:id', auth, multer, modifyPost);
+app.delete('/api/feed/:id', auth, deletePost);
+app.get('/api/feed/:id', auth, getOnePost);
+app.get('/api/feed', auth, getAllPost);
+app.post('/api/feed/:id/like', auth, likePost);
 
 export default app;

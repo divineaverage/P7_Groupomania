@@ -1,9 +1,10 @@
-import "../src/sass/app.scss"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Auth from "./components/Login/Auth"
-import CreatePost from "./components/feed/Posts/CreatePost"
-import Feed from "./components/feed/Feed"
-import Profile from "./components/profile/Profile"
+import React from "react";
+import "../src/sass/app.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Auth from "./components/Login/Auth";
+import AddPostForm from "./components/feed/AddPostForm";
+import PostsList from "./components/feed/Feed";
+// import Profile from "./components/profile/Profile"
 
 function app() {
   return (
@@ -11,13 +12,29 @@ function app() {
       <Routes>
         <Route path="/Auth" element={<Auth />} />
         <Route path="/">
-        {/* <Route path="/createPost" element={<CreatePost />} /> */}
-        <Route path="/feed" element={<Feed />} />
-        {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route
+            exact
+            path="/createPost"
+            render={() => (
+              <React.Fragment>
+                <AddPostForm />
+              </React.Fragment>
+            )}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                <PostsList />
+              </React.Fragment>
+            )}
+          />
+          {/* <Route path="/profile" element={<Profile />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default app 
+export default app;
