@@ -5,9 +5,7 @@ function PostButton() {
   return (
     <>
       <div className="mb-2">
-        <Button variant="primary" size="lg">
-        <Button href="/CreatePost">New Post</Button>
-        </Button>{' '}
+        <Button variant="dark" size="lg" href="/CreatePost">New Post</Button>{' '}
       </div>
     </>
   );

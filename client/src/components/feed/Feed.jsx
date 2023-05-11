@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useSelector, useDispatch, } from "react-redux"
-import PostCard from "./PostCard"
+// import { POST_TYPES } from "../../redux/actions/postAction"
+import PostCard from "./Posts/PostCard"
 import "../../sass/app.scss"
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
@@ -9,7 +10,7 @@ import PostButton from "./PostButton"
 import LoadIcon from "../../assets/loading.gif"
 import LoadMoreBtn from "./LoadMoreBtn"
 import { getDataAPI } from "../../utils/fetchData"
-import { POST_TYPES } from "../../redux/actions/postAction"
+
 
 
 const Posts = () => {

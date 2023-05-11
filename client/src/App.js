@@ -1,7 +1,7 @@
 import "../src/sass/app.scss"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Auth from "./components/Login/Auth"
-import CreatePost from "./components/feed/CreatePost"
+import CreatePost from "./components/feed/Posts/CreatePost"
 import Feed from "./components/feed/Feed"
 import Profile from "./components/profile/Profile"
 

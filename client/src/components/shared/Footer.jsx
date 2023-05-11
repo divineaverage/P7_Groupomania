@@ -6,10 +6,9 @@ function Footer() {
     <div className='footer-box'>
         <hr className="solid"></hr>
     <ListGroup horizontal>
-      <ListGroup.Item>This</ListGroup.Item>
-      <ListGroup.Item>ListGroup</ListGroup.Item>
-      <ListGroup.Item>renders</ListGroup.Item>
-      <ListGroup.Item>horizontally!</ListGroup.Item>
+      <ListGroup.Item>About</ListGroup.Item>
+      <ListGroup.Item>Legal</ListGroup.Item>
+      <ListGroup.Item>Help</ListGroup.Item>
     </ListGroup>
     </div>
   );
