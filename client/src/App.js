@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Auth from "./components/Login/Auth";
 import AddPostForm from "./components/feed/AddPostForm";
 import PostsList from "./components/feed/Feed";
-// import Profile from "./components/profile/Profile"
+import Profile from "./components/profile/Profile"
 
 function app() {
   return (
@@ -30,7 +30,15 @@ function app() {
               </React.Fragment>
             )}
           />
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                <Profile />
+              </React.Fragment>
+            )}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

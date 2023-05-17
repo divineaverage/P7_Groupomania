@@ -1,36 +1,32 @@
-import axios from 'axios'
+import React, { createContext, useState, useEffect } from "react";
 
-export const getDataAPI = async (url, token) => {
-    const res = await axios.get(`/api/${url}`, {
-        headers: { Authorization: token}
-    })
-    return res;
+export const DataContext = createContext({});
+
+export const DataProvider = ({ children }) => {
+
+    const [dataUser, setDataUser] = useState([])
+    const LStoken = localStorage.getItem('token')
+    const userId = localStorage.getItem('id')
+    const [dataUserId, setDataUserId] = useState('')
+
+    useEffect(() => {
+        fetch(`http://localhost:3001/api/user/${userId}`)
+            .then((response) => {
+                console.log(response.data)
+                setDataUserId(response.data.id)
+                setDataUser(response.data)
+            })
+    }, [])
+
+    return (
+        <DataContext.Provider value={{
+            dataUser, LStoken, dataUserId
+        }}>
+            {children}
+        </DataContext.Provider>
+    )
 }
 
-export const postDataAPI = async (url, post, token) => {
-    const res = await axios.post(`/api/${url}`, post, {
-        headers: { Authorization: token}
-    })
-    return res;
-}
 
-export const putDataAPI = async (url, post, token) => {
-    const res = await axios.put(`/api/${url}`, post, {
-        headers: { Authorization: token}
-    })
-    return res;
-}
 
-export const patchDataAPI = async (url, post, token) => {
-    const res = await axios.patch(`/api/${url}`, post, {
-        headers: { Authorization: token}
-    })
-    return res;
-}
-
-export const deleteDataAPI = async (url, token) => {
-    const res = await axios.delete(`/api/${url}`, {
-        headers: { Authorization: token}
-    })
-    return res;
-}
+export default DataContext;

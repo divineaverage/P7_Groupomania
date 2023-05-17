@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { selectAllPosts, fetchPosts } from './postsSlice'
+import { selectAllPosts, fetchPosts } from '../store/postsSlice'
 
 import "../../sass/app.scss"
 import NavBar from "../shared/Nav"
