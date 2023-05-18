@@ -1,17 +1,18 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import app from "../../App"
 
 const initialState = {
   posts: [],
   status: "idle",
-  error: null
+  error: null,
+  userToken: null, // for storing the JWT
 }
 
 export const addNewPost = createAsyncThunk(
   "../feed/posts/AddPostForm",
   // The payload creator receives the partial `{title, content, user}` object
   async initialPost => {
-    // We send the initial data to the fake API server
+    // We send the initial data to the  API server
     const response = await app.post("/createPost", initialPost)
     // The response includes the complete post object, including unique ID
     return response.data
@@ -30,12 +31,15 @@ const postsSlice = createSlice({
         // omit prepare logic
       }
     },
-    reactionAdded(state, action) {
-      const { postId, reaction } = action.payload
-      const existingPost = state.posts.find(post => post.id === postId)
-      if (existingPost) {
-        existingPost.reactions[reaction]++
-      }
+    setPosts: (state, action) => {
+      state.posts = action.payload.posts;
+    },
+    setPost: (state, action) => {
+      const updatedPosts = state.posts.map((post) => {
+        if (post._id === action.payload.post._id) return action.payload.post;
+        return post;
+      });
+      state.posts = updatedPosts;
     },
     postUpdated(state, action) {
       const { id, title, content } = action.payload
@@ -48,7 +52,7 @@ const postsSlice = createSlice({
   }
 })
 
-export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
+export const { postAdded, postUpdated, setPosts, setPost } = postsSlice.actions
 
 export default postsSlice.reducer
 

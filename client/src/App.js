@@ -10,37 +10,12 @@ function app() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<Auth />} />
         <Route path="/Auth" element={<Auth />} />
-        <Route path="/">
-          <Route
-            exact
-            path="/createPost"
-            render={() => (
-              <React.Fragment>
-                <AddPostForm />
-              </React.Fragment>
-            )}
-          />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <PostsList />
-              </React.Fragment>
-            )}
-          />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <Profile />
-              </React.Fragment>
-            )}
-          />
-        </Route>
-      </Routes>
+        <Route path="/CreatePost" element={<AddPostForm />} />
+        <Route path="/Feed" element={<PostsList />} />
+        <Route path="/Profile" element={<Profile />} />
+        </Routes>
     </BrowserRouter>
   );
 }

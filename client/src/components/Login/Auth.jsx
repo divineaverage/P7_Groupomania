@@ -4,12 +4,32 @@ import Footer from "../shared/Footer";
 import "./auth.scss";
 import "../../sass/app.scss"
 
-export default function (props) {
-  let [authMode, setAuthMode] = useState("signin");
+export default function Auth (props) {
+  const [authMode, setAuthMode] = useState("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault()
+    fetch("//localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({email, password}),
+    }).then(res=>res.json()).then(user=>{
+      console.log(user)
+    }).catch(error=>{
+      console.warn("error is", error)
+    })
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    changeAuthMode()
+  }
 
   if (authMode === "signin") {
     return (
@@ -20,14 +40,14 @@ export default function (props) {
         <h3>Smaller words here</h3>
         </div>
         <div className="Auth-form-container">
-          <form className="Auth-form">
+          <form className="Auth-form" onSubmit={handleFormSubmission}>
             <div className="Auth-form-content">
               <h3 className="Auth-form-title">Sign In</h3>
               <div className="text-center">
                 Not registered yet?{" "}
-                <span className="link-primary" onClick={changeAuthMode}>
+                <a href="/auth" className="link-primary" onClick={handleClick}>
                   Sign Up
-                </span>
+                </a>
               </div>
               <div className="form-group mt-3">
                 <label>Email address</label>
@@ -35,14 +55,17 @@ export default function (props) {
                   type="email"
                   className="form-control mt-1"
                   placeholder="Enter email"
+                  onChange={(e)=>setEmail(e.target.value)}
                 />
               </div>
               <div className="form-group mt-3">
                 <label>Password</label>
                 <input
                   type="password"
+                  required
                   className="form-control mt-1"
                   placeholder="Enter password"
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
@@ -67,9 +90,9 @@ export default function (props) {
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
+            <a href="/auth" className="link-primary" onClick={handleClick}>
               Sign In
-            </span>
+            </a>
           </div>
           <div className="form-group mt-3">
             <label>Full Name</label>
@@ -77,23 +100,27 @@ export default function (props) {
               type="name"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
+              // onChange={()}
             />
           </div>
           <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Password"
-            />
+                <label>Email address</label>
+                <input
+                  type="email"
+                  className="form-control mt-1"
+                  placeholder="Enter email"
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  required
+                  className="form-control mt-1"
+                  placeholder="Enter password"
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
           </div>
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-dark">
