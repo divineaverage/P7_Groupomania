@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import "./feed.scss"
+import "./postsList.scss"
 
 function PostButton() {
   return (

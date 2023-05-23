@@ -3,7 +3,7 @@ import "../src/sass/app.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Auth from "./components/Login/Auth";
 import AddPostForm from "./components/feed/AddPostForm";
-import PostsList from "./components/feed/Feed";
+import PostsList from "./components/feed/PostsList";
 import Profile from "./components/profile/Profile"
 
 function app() {
@@ -13,7 +13,7 @@ function app() {
       <Route path="/" element={<Auth />} />
         <Route path="/Auth" element={<Auth />} />
         <Route path="/CreatePost" element={<AddPostForm />} />
-        <Route path="/Feed" element={<PostsList />} />
+        <Route path="/PostsList" element={<PostsList />} />
         <Route path="/Profile" element={<Profile />} />
         </Routes>
     </BrowserRouter>
