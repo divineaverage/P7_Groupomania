@@ -56,7 +56,7 @@ export default function Profile() {
                         </thead>
 
                         <tr>
-                            <td> <p className="profile-info-input">Username</p> </td>
+                            <td> <p className="profile-info-input">User name</p> </td>
                             <td> <p className="profile-line-data"> {dataUser.name}</p> </td>
                         </tr>
 

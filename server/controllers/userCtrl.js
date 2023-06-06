@@ -1,5 +1,5 @@
 import User from "../models/userModel.js";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class UsersController {
@@ -12,7 +12,7 @@ class UsersController {
       if (user) {
         return res.status(401).json({
           error: true,
-          message: "Username is already in use.",
+          message: "Email is already in use.",
         });
       }
 
@@ -33,7 +33,7 @@ class UsersController {
   static async login(req, res) {
     if (!req.body.email) {
       return res.status(400).json({
-        message: "Username is required.",
+        message: "Email is required.",
       })
     }
     else if (!req.body.password) {

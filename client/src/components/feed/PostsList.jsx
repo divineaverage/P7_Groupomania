@@ -11,8 +11,8 @@ import SinglePost from "./SinglePost"
 
   const PostsList = ({ userId, isProfile = false }) => {
     const dispatch = useDispatch();
-    const posts = useSelector((state) => state.posts);
-    const token = useSelector((state) => state.token);
+    const {posts} = useSelector((state) => state.posts);
+    const {token} = useSelector((state) => state.user);
   
     const getPosts = async () => {
       const response = await fetch("http://localhost:8080/posts", {
@@ -42,7 +42,6 @@ import SinglePost from "./SinglePost"
         getPosts();
       }
     }, []);
-
 
   return (
       <>

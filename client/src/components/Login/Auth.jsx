@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import NavBar from "./AuthNav";
 import Footer from "../shared/Footer";
 import "./auth.scss";
-import "../../sass/app.scss"
+import "../../sass/app.scss";
+import store from "../store/store"
+import { setLogin } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth (props) {
   const [authMode, setAuthMode] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
@@ -15,14 +19,23 @@ export default function Auth (props) {
 
   const handleFormSubmission = (e) => {
     e.preventDefault()
-    fetch("//localhost:8080/api/auth/login", {
+    fetch("//localhost:8080/api/auth/" +(authMode==="signin"?"login": "signup"), {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({email, password}),
-    }).then(res=>res.json()).then(user=>{
-      console.log(user)
-    }).catch(error=>{
-      console.warn("error is", error)
+    })
+    .then(res=>{
+      if (res.ok) return res
+      console.log(res)
+      throw new Error()
+    })
+    .then(res=>res.json()).then(user=>{
+      console.log(user);
+      store.dispatch(setLogin({user}));
+      localStorage.setItem("authenticated", true);
+      navigate("/PostsList");
+    }).catch(()=>{
+      console.warn("Login error")
     })
   }
 
@@ -85,7 +98,7 @@ export default function Auth (props) {
     <div className="page-container">
         <NavBar></NavBar>
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={handleFormSubmission}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">

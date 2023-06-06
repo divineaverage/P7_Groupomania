@@ -48,7 +48,7 @@ app.post("/api/auth/login", usersController.login)
 
 app.post('/api/posts', function (req, res, next) {
   var post = new user({
-    username: req.body.username,
+    email: req.body.email,
     password: req.body.body
   })
   post.post(function (err, post) {
