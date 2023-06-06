@@ -43,23 +43,19 @@ const AddPostForm = () => {
   return (
     <div className="page-container">
         <NavBar></NavBar>
-        <div className="caption-bar">
-        <h1>Big words here</h1>
-        <h3>Smaller words here</h3>
-          </div>
           <div className="Post-form-container">
           <form className="Post-form">
             <div className="Post-form-content">
               <h3 className="Post-form-caption">Post a picture</h3>
-              <div className="form-group mt-3">
+              <div className="form-group">
                 <label>Create your caption</label>
                 <textarea
-                  rows="5" cols="30"
+                  rows="8" cols="50"
                   className="post-text-box"
                   required
                 />
               </div>
-              <div className="form-group mt-3">
+              <div className="form-group">
                 <label>Image upload</label>
                 <input
                   type="file"
