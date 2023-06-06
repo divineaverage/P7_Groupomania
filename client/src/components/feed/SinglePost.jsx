@@ -43,7 +43,7 @@ const SinglePost = ({
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
         <Card.Text>
-          caption={caption}
+          {/* caption={caption} */}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
