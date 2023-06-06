@@ -1,10 +1,10 @@
 import { Icon, ListGroup, Card, Button, props, useState } from "react";
 import { FaThumbsUp } from "react-icons/fa"
 
-const SinglePost = ({
+const PostCard = ({
   name,
   picturePath,
-  userPicturePath,
+  caption,
  
 }) => {
 
@@ -30,7 +30,7 @@ const SinglePost = ({
 
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img userPicturePath={userPicturePath} />
+      <Card.Img picturePath={picturePath} />
       {picturePath && (
         <img
           width="100%"
@@ -43,7 +43,7 @@ const SinglePost = ({
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
         <Card.Text>
-          {/* caption={caption} */}
+          caption={caption}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
@@ -63,4 +63,4 @@ const SinglePost = ({
   );
 };
 
-export default SinglePost;
+export default PostCard;

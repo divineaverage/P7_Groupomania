@@ -108,11 +108,11 @@ export default function Auth (props) {
             </a>
           </div>
           <div className="form-group mt-3">
-            <label>Full Name</label>
+            <label>Username</label>
             <input
               type="name"
               className="form-control mt-1"
-              placeholder="e.g Jane Doe"
+              placeholder="e.g JaneDoe"
               // onChange={()}
             />
           </div>

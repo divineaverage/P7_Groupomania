@@ -6,7 +6,7 @@ import "./postsList.scss"
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
 import PostButton from "./PostButton"
-import SinglePost from "./SinglePost"
+import Card from "./Card"
 
 
   const PostsList = ({ userId, isProfile = false }) => {
@@ -50,24 +50,19 @@ import SinglePost from "./SinglePost"
           ({
             _id,
             userId,
-            firstName,
-            lastName,
-            description,
+            name,
+            caption,
             picturePath,
-            userPicturePath,
-            // likes,
-            // dislikes,
+            likes,
           }) => (
-            <SinglePost
+            <Card
               key={_id}
               postId={_id}
               postUserId={userId}
-              name={`${firstName} ${lastName}`}
-              description={description}
+              name={name}
+              caption={caption}
               picturePath={picturePath}
-              userPicturePath={userPicturePath}
-              // likes={likes}
-              // dislikes={dislikes}
+              likes={likes}
             />
           )
         )}

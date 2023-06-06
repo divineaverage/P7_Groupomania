@@ -1,4 +1,3 @@
-import Nav from "react-bootstrap/Nav";
 import logo from "../../assets/icon-above-font.svg";
 import "../shared/nav.scss";
 
