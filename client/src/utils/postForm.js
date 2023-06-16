@@ -33,7 +33,7 @@ export const dateParser = (num) => {
   };
   
   export const isEmpty = (value) => {
-    //fonction qui va verifier si qqch est vide
+    
     return (
       value === undefined ||
       value === null ||

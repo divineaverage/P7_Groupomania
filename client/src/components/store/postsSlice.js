@@ -8,16 +8,6 @@ const initialState = {
   userToken: null, // for storing the JWT
 }
 
-export const addNewPost = createAsyncThunk(
-  "../feed/posts/AddPostForm",
-  // The payload creator receives the partial `{title, content, user}` object
-  async initialPost => {
-    // We send the initial data to the  API server
-    const response = await app.post("/createPost", initialPost)
-    // The response includes the complete post object, including unique ID
-    return response.data
-  }
-)
 
 const postsSlice = createSlice({
   name: "posts",

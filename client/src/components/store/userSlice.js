@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
   const initialState = {
     loading: false,
     userInfo: {}, // for user object
-    userToken: null, // for storing the JWT
+    token: null, // for storing the JWT
     error: null,
     success: false, // for monitoring the registration process.
   }
@@ -31,23 +31,3 @@ export const { setMode, setLogin, setLogout, setPosts, setPost } =
 
 
 export default slice.reducer
-
-
-const { loginSuccess, logoutSuccess } = slice.actions
-
-export const login = ({ email, password }) => async dispatch => {
-  try {
-    dispatch(loginSuccess({email, password}));
-  } catch (e) {
-    return console.error(e.message);
-  }
-  
-}
-
-export const logout = () => async dispatch => {
-  try {
-    return dispatch(logoutSuccess())
-  } catch (e) {
-    return console.error(e.message);
-  }
-}

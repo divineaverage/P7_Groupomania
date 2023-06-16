@@ -31,7 +31,7 @@ export default function Auth (props) {
     })
     .then(res=>res.json()).then(user=>{
       console.log(user);
-      store.dispatch(setLogin({user}));
+      store.dispatch(setLogin({user:user.userId, token:user.token}));
       localStorage.setItem("authenticated", true);
       navigate("/PostsList");
     }).catch(()=>{

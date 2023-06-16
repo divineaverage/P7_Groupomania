@@ -15,10 +15,10 @@ function NavBar() {
       onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
     >
       <Nav.Item>
-        <Nav.Link href="/feed">Home</Nav.Link>
+        <Nav.Link href="/PostsList">Home</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="/profile">Profile</Nav.Link>
+        <Nav.Link eventKey="/Profile">Profile</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link eventKey="/">Log out</Nav.Link>

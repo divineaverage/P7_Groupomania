@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../shared/Nav";
 import "./postStyles.scss"
@@ -7,25 +7,30 @@ import Footer from "../shared/Footer";
 import { postAdded } from '../store/postsSlice'
 
 const AddPostForm = () => {
-  const [postPicture, setPostPicture] = useState(null);
-  const [file, setFile] = useState();
   const [caption, setCaption] = useState('')
-  const [image, setImage] = useState('')
-  const [userId, setUserId] = useState('')
+  const [image, setImage] = useState()
   const [addRequestStatus, setAddRequestStatus] = useState('idle')
-  const userData = useSelector((state) => state.userReducer);
+  const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const canSave =
-    [caption, image, userId].every(Boolean) && addRequestStatus === 'idle'
+  const [canSave, setCanSave] = useState (checkCanSave())
+
+  function checkCanSave() {
+    return !!caption.length && !!image && addRequestStatus === 'idle'
+  }
+
+  useEffect (()=>{
+    setCanSave(checkCanSave)
+    console.log(image)
+  }
+  ,[caption, image, addRequestStatus])
 
   const onSavePostClicked = async () => {
     if (canSave) {
       try {
         setAddRequestStatus('pending')
-        await dispatch(postAdded({ caption, image, user: userId })).unwrap()
+        await dispatch(postAdded({ caption, image }))
         setCaption('')
         setImage('')
-        setUserId('')
       } catch (err) {
         console.warn("Publishing error")
       } finally {
@@ -35,16 +40,33 @@ const AddPostForm = () => {
   }
 
   const handlePicture = (e) => {
-    setPostPicture(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
+    setImage(e.target.files[0]);
   };
+
+ function handleSubmit(e) {
+  e.preventDefault()
+  const body = {caption, image, userId:userData.userId}
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization : "Bearer " + userData.token
+    },
+    body: JSON.stringify(body),
+  }
+  fetch ("//localhost:8080/api/feed", options).then(res => res.json()).then(data => {
+    console.log(data)
+  }).catch(() => {
+    console.log("OH NO")
+  })
+ }
 
 
   return (
     <div className="page-container">
         <NavBar></NavBar>
           <div className="Post-form-container">
-          <form className="Post-form">
+          <form className="Post-form" onSubmit={handleSubmit}>
             <div className="Post-form-content">
               <h3 className="Post-form-caption">Post a picture</h3>
               <div className="form-group">
@@ -52,6 +74,7 @@ const AddPostForm = () => {
                 <textarea
                   rows="8" cols="50"
                   className="post-text-box"
+                  onChange={(e) => {setCaption(e.target.value)}}
                   required
                 />
               </div>
@@ -67,7 +90,7 @@ const AddPostForm = () => {
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="btn btn-dark" onClick={onSavePostClicked}>
+                <button type="submit" className="btn btn-dark" onClick={onSavePostClicked} disabled={!canSave}>
                   Publish post
                 </button>
               </div>
