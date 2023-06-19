@@ -24,20 +24,20 @@ const AddPostForm = () => {
   }
   ,[caption, image, addRequestStatus])
 
-  const onSavePostClicked = async () => {
-    if (canSave) {
-      try {
-        setAddRequestStatus('pending')
-        await dispatch(postAdded({ caption, image }))
-        setCaption('')
-        setImage('')
-      } catch (err) {
-        console.warn("Publishing error")
-      } finally {
-        setAddRequestStatus('idle')
-      }
-    }
-  }
+  // const onSavePostClicked = async () => {
+  //   if (canSave) {
+  //     try {
+  //       setAddRequestStatus('pending')
+  //       await dispatch(postAdded({ caption, image }))
+  //       // setCaption('')
+  //       // setImage('')
+  //     } catch (err) {
+  //       console.warn("Publishing error")
+  //     } finally {
+  //       setAddRequestStatus('idle')
+  //     }
+  //   }
+  // }
 
   const handlePicture = (e) => {
     setImage(e.target.files[0]);
@@ -45,16 +45,23 @@ const AddPostForm = () => {
 
  function handleSubmit(e) {
   e.preventDefault()
-  const body = {caption, image, userId:userData.userId}
+  // const body = {caption, image:{...image}, userId:userData.userId}
+  const body = new FormData()
+  body.append("image", image)
+  body.append("caption", caption)
+  body.append("userId", userData.userId)
+
+  console.log(body.get("userId"));
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json",
       Authorization : "Bearer " + userData.token
     },
-    body: JSON.stringify(body),
+    // body: JSON.stringify(body),
+    body
   }
-  fetch ("//localhost:8080/api/feed", options).then(res => res.json()).then(data => {
+  fetch ("//localhost:8080/api/posts", options).then(res => res.json()).then(data => {
     console.log(data)
   }).catch(() => {
     console.log("OH NO")
@@ -90,7 +97,7 @@ const AddPostForm = () => {
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="btn btn-dark" onClick={onSavePostClicked} disabled={!canSave}>
+                <button type="submit" className="btn btn-dark" disabled={!canSave}>
                   Publish post
                 </button>
               </div>

@@ -1,4 +1,5 @@
 import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
 import logo from "../../assets/icon-above-font.svg";
 import "./nav.scss";
 
@@ -11,17 +12,16 @@ function NavBar() {
       </div>
       <div className="navList">
       <Nav
-      activeKey="/home"
-      onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+      activeKey="/PostsList"
     >
       <Nav.Item>
-        <Nav.Link href="/PostsList">Home</Nav.Link>
+        <Link to="/PostsList" className="nav-link">Home</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="/Profile">Profile</Nav.Link>
+        <Link to="/Profile" className="nav-link">Profile</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="/">Log out</Nav.Link>
+        <Link to="/" className="nav-link" >Log out</Link>
       </Nav.Item>
     </Nav>
       </div>

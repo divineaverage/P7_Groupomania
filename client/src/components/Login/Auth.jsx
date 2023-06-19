@@ -29,10 +29,9 @@ export default function Auth (props) {
       console.log(res)
       throw new Error()
     })
-    .then(res=>res.json()).then(user=>{
+    .then(res=>res.json()).then( async user=>{
       console.log(user);
-      store.dispatch(setLogin({user:user.userId, token:user.token}));
-      localStorage.setItem("authenticated", true);
+      await store.dispatch(setLogin({user:user.userId, token:user.token}));
       navigate("/PostsList");
     }).catch(()=>{
       console.warn("Login error")

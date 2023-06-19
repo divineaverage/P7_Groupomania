@@ -5,10 +5,12 @@ import usersController from "./controllers/userCtrl.js";
 import mongoose from 'mongoose';
 import auth from './middleware/auth.js';
 import multer from './middleware/multer-config.js';
+import path from "path";
 import {fileURLToPath} from "url";
 import {config} from "dotenv";
 import { createPost, deletePost, getAllPosts, likePost, modifyPost } from './controllers/postCtrl.js';
 const {MONGODBURL} = config().parsed;
+const __filename = fileURLToPath(import.meta.url);
 export const app = express();
 
 console.log(MONGODBURL);
@@ -46,8 +48,6 @@ app.post("/api/auth/login", usersController.login)
 
 app.post('/api/posts', function (req, res, next) {
   var post = new user({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.body
   })
@@ -58,10 +58,10 @@ app.post('/api/posts', function (req, res, next) {
 })
 
 //Post functions
-app.post('/api/feed', auth, multer, createPost);
-app.put('/api/feed/:id', auth, multer, modifyPost);
-app.delete('/api/feed/:id', auth, deletePost);
-app.get('/api/feed', auth, getAllPosts);
-app.post('/api/feed/:id/like', auth, likePost);
+app.post('/api/posts', auth, multer, createPost);
+app.put('/api/posts/:id', auth, multer, modifyPost);
+app.delete('/api/posts/:id', auth, deletePost);
+app.get('/api/posts', auth, getAllPosts);
+app.post('/api/posts/:id/like', auth, likePost);
 
 export default app;

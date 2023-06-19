@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom"
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
+    console.log(posts)
 
     useEffect (() => {
       if (!token) {
@@ -33,7 +34,7 @@ import { useNavigate } from "react-router-dom"
   
     const getUserPosts = async () => {
       const response = await fetch(
-        `http://localhost:8080/posts/${userId}/posts`,
+        `http://localhost:8080/api/posts/${userId}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },

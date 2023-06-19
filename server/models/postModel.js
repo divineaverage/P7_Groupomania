@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    content: String,
-    images: {
-      type: Array,
+    imageUrl: {
+      type: String,
       required: true,
     },
-    description: { type: String, required: true },
+    caption: { type: String, required: true },
     likes: { type: Number, default: 0 },
     usersLiked: [String],
   },

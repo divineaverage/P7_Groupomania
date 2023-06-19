@@ -3,13 +3,14 @@ import fs from "fs";
 
 // New post
 export const createPost = (req, res) => {
-     const postObject = JSON.parse(req.body.post);
-
+     const postObject = req.body;
+    console.log(req.body)
     delete postObject._id;
     delete postObject._userId;
 
     const post = new Post({
         ...postObject,
+        likes:0,
         imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
         userId: postObject.userId
     });
