@@ -1,28 +1,53 @@
-import { Icon, ListGroup, Card, Button, props, useState } from "react";
+import { Icon, Button, useState, useEffect, props } from "react";
 import { FaThumbsUp } from "react-icons/fa"
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { setPosts } from "../store/postsSlice"
 
-const PostCard = ({
+
+const PostCard = ({ post }) => {
+  const [postData, setPostData] = useState(post);
+  
+  const {
+  _id,
+  userId,
   name,
-  picturePath,
   caption,
- 
-}) => {
+  picturePath,
+  likes,
+  } = postData;
 
-  const [isLiked, updateLike] = useState(false);
+  
+    const navigate = useNavigate();
+    const {posts} = useSelector((state) => state.posts);
+    const {token} = useSelector((state) => state.user);
+    console.log(posts)
+
+    useEffect (() => {
+      if (!token) {
+        navigate ("/auth")
+      }
+    }, [token]);
+
+    const numberOfLikes = `${likes.length} likes`;
+
+    const [isLiked, updateLike] = useState(false);
   const handleLike = () => {
     let currentLikedPosts = props.likedPosts;
     if (!isLiked) {
       updateLike(true);
-      if (!currentLikedPosts.includes(name))
+      if (!currentLikedPosts.includes(_id))
         props.updateLikedPosts(
-          [...currentLikedPosts, name]
+          [...currentLikedPosts, _id]
         );
     } else {
       updateLike(false);
-      if (currentLikedPosts.includes(name))
+      if (currentLikedPosts.includes(_id))
         props.updateLikedPosts(
           currentLikedPosts
-          .filter(band => band !== name)
+          .filter(post => post !== _id)
           );
     }
   };
@@ -37,24 +62,24 @@ const PostCard = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3000/assets/${picturePath}`}
+          src={`http://localhost:8080/server/${picturePath}`}
         />
       )}
       <Card.Body>
         <Card.Title>Card Title</Card.Title>
         <Card.Text>
-          caption={caption}
+          {caption}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>name={name}</ListGroup.Item>
+        <ListGroup.Item>{name}</ListGroup.Item>
         <ListGroup.Item> 
           <Button
           onClick={handleLike}
           disabled={isLiked}
           >
           <Icon
-            icon={FaThumbsUp}
+            icon={FaThumbsUp} 
             style={{ paddingRight: 5 }}
           />
         </Button>
