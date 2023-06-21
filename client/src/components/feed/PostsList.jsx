@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom"
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
-    console.log(posts)
 
     useEffect (() => {
       if (!token) {
@@ -52,6 +51,8 @@ import { useNavigate } from "react-router-dom"
       }
     }, []);
 
+    const card = card[0]
+    
   return (
       <>
       <NavBar></NavBar>

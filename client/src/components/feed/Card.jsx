@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { setPosts } from "../store/postsSlice"
 
 
 const PostCard = ({ post }) => {
@@ -12,12 +11,11 @@ const PostCard = ({ post }) => {
   
   const {
   _id,
-  userId,
   name,
   caption,
   picturePath,
   likes,
-  } = postData;
+  } = postData || {};
 
   
     const navigate = useNavigate();
@@ -30,8 +28,7 @@ const PostCard = ({ post }) => {
         navigate ("/auth")
       }
     }, [token]);
-
-    const numberOfLikes = `${likes.length} likes`;
+    
 
     const [isLiked, updateLike] = useState(false);
   const handleLike = () => {
@@ -51,7 +48,6 @@ const PostCard = ({ post }) => {
           );
     }
   };
-
 
   return (
     <Card style={{ width: '18rem' }}>

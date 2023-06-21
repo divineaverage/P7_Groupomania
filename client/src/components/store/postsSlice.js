@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import app from "../../App"
+import { createSlice } from "@reduxjs/toolkit"
+
 
 const initialState = {
   posts: [],

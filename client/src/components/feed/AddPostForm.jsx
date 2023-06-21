@@ -4,7 +4,6 @@ import NavBar from "../shared/Nav";
 import "./postStyles.scss"
 import Footer from "../shared/Footer";
 
-import { postAdded } from '../store/postsSlice'
 
 const AddPostForm = () => {
   const [caption, setCaption] = useState('')
@@ -24,20 +23,6 @@ const AddPostForm = () => {
   }
   ,[caption, image, addRequestStatus])
 
-  // const onSavePostClicked = async () => {
-  //   if (canSave) {
-  //     try {
-  //       setAddRequestStatus('pending')
-  //       await dispatch(postAdded({ caption, image }))
-  //       // setCaption('')
-  //       // setImage('')
-  //     } catch (err) {
-  //       console.warn("Publishing error")
-  //     } finally {
-  //       setAddRequestStatus('idle')
-  //     }
-  //   }
-  // }
 
   const handlePicture = (e) => {
     setImage(e.target.files[0]);
@@ -45,7 +30,7 @@ const AddPostForm = () => {
 
  function handleSubmit(e) {
   e.preventDefault()
-  // const body = {caption, image:{...image}, userId:userData.userId}
+
   const body = new FormData()
   body.append("image", image)
   body.append("caption", caption)
@@ -55,10 +40,8 @@ const AddPostForm = () => {
   const options = {
     method: "POST",
     headers: {
-      // "Content-Type": "application/json",
       Authorization : "Bearer " + userData.token
     },
-    // body: JSON.stringify(body),
     body
   }
   fetch ("//localhost:8080/api/posts", options).then(res => res.json()).then(data => {
