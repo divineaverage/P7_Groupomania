@@ -25,6 +25,7 @@ import "../../sass/app.scss";
     }, [token]);
   
     const getPosts = async () => {
+      console.log("!!!!!"+token)
       const response = await fetch("http://localhost:8080/api/posts", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -34,10 +35,10 @@ import "../../sass/app.scss";
         dispatch(setPosts({ posts: data }));
         }
     };
-
-
-    
   
+    useEffect(() => {
+      getPosts();
+    }, []);
     
   return (
       <>
