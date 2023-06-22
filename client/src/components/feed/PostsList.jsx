@@ -51,7 +51,7 @@ import { useNavigate } from "react-router-dom"
       }
     }, []);
 
-    const card = card[0]
+    console.log(posts)
     
   return (
       <>

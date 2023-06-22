@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
 
-const PostCard = ({ post }) => {
+const PostCard = ( post ) => {
   const [postData, setPostData] = useState(post);
   
   const {
