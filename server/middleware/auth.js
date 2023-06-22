@@ -8,6 +8,7 @@ export const authorize = (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decodedToken.userId;
         req.auth = { userId: userId };
+        console.log(token)
         if (req.body.userId && req.body.userId !== userId) {
             throw "User ID is not found.";
         } else {

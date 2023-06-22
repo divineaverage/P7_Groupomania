@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../shared/Nav";
 import "./postStyles.scss"
 import Footer from "../shared/Footer";
+import { useNavigate } from "react-router-dom"
 
 
 const AddPostForm = () => {
@@ -10,7 +11,7 @@ const AddPostForm = () => {
   const [image, setImage] = useState()
   const [addRequestStatus, setAddRequestStatus] = useState('idle')
   const userData = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [canSave, setCanSave] = useState (checkCanSave())
 
   function checkCanSave() {
@@ -46,6 +47,7 @@ const AddPostForm = () => {
   }
   fetch ("//localhost:8080/api/posts", options).then(res => res.json()).then(data => {
     console.log(data)
+    navigate ("/postsList")
   }).catch(() => {
     console.log("OH NO")
   })

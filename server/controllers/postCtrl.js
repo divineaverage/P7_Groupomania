@@ -12,7 +12,7 @@ export const createPost = (req, res) => {
         ...postObject,
         likes:0,
         imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-        userId: postObject.userId
+        authorId: postObject.userId
     });
     post.save()
         .then(() => res.status(201).json({message: "Post added." }))

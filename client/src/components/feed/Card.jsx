@@ -1,27 +1,29 @@
-import { Icon, Button, useState, useEffect, props } from "react";
+import { Icon, useState, useEffect, props } from "react";
 import { FaThumbsUp } from "react-icons/fa"
-import Card from 'react-bootstrap/Card';
+import { Card, Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
+import "../../sass/app.scss";
+import "./card.scss"
 
 
 const PostCard = ( post ) => {
-  const [postData, setPostData] = useState(post);
   
   const {
   _id,
   name,
   caption,
-  picturePath,
+  date,
+  imageUrl,
   likes,
-  } = postData || {};
+  } = post || {};
+  
+  console.log(post)
 
   
     const navigate = useNavigate();
-    const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
-    console.log(posts)
 
     useEffect (() => {
       if (!token) {
@@ -50,35 +52,21 @@ const PostCard = ( post ) => {
   };
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img picturePath={picturePath} />
-      {picturePath && (
-        <img
-          width="100%"
-          height="auto"
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:8080/server/${picturePath}`}
-        />
-      )}
+    <Card style={{ maxWidth: '40rem' }}>
+      <Card.Img variant="top" src={imageUrl} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <Card.Text>
           {caption}
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>{name}</ListGroup.Item>
+        <ListGroup.Item className="date">{date}</ListGroup.Item>
         <ListGroup.Item> 
-          <Button
+          <Button variant="dark" 
           onClick={handleLike}
           disabled={isLiked}
-          >
-          <Icon
-            icon={FaThumbsUp} 
-            style={{ paddingRight: 5 }}
-          />
-        </Button>
+          ><FaThumbsUp /></Button>
       </ListGroup.Item></ListGroup>
     </Card>
   );

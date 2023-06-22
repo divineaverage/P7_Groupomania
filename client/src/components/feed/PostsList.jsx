@@ -8,6 +8,7 @@ import Footer from "../shared/Footer"
 import PostButton from "./PostButton"
 import Card from "./Card"
 import { useNavigate } from "react-router-dom"
+import "../../sass/app.scss";
 
 
   const PostsList = ({ userId, isProfile = false }) => {
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom"
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
+    
 
     useEffect (() => {
       if (!token) {
@@ -27,31 +29,15 @@ import { useNavigate } from "react-router-dom"
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await response.json();
-      dispatch(setPosts({ posts: data }));
-    };
-  
-    const getUserPosts = async () => {
-      const response = await fetch(
-        `http://localhost:8080/api/posts/${userId}`,
-        {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(setPosts({ posts: data }));
         }
-      );
-      const data = await response.json();
-      dispatch(setPosts({ posts: data }));
     };
-  
-    useEffect(() => {
-      if (isProfile) {
-        getUserPosts();
-      } else {
-        getPosts();
-      }
-    }, []);
 
-    console.log(posts)
+
+    
+  
     
   return (
       <>
@@ -62,7 +48,8 @@ import { useNavigate } from "react-router-dom"
             userId,
             name,
             caption,
-            picturePath,
+            imageUrl,
+            date,
             likes,
           }) => (
             <Card
@@ -71,7 +58,8 @@ import { useNavigate } from "react-router-dom"
               postUserId={userId}
               name={name}
               caption={caption}
-              picturePath={picturePath}
+              date={date}
+              imageUrl={imageUrl}
               likes={likes}
             />
           )

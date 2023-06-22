@@ -6,8 +6,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    authorId: {type: String, required: true},
     caption: { type: String, required: true },
     likes: { type: Number, default: 0 },
+    date: { type: String, default: new Date()},
     usersLiked: [String],
   },
   {
