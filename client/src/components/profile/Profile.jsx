@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
 import "../../sass/app.scss"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 
@@ -41,36 +43,24 @@ export default function Profile() {
    
         <div className="main-container">
             <NavBar></NavBar>
-            <h1 className="hidden-h1">Profile</h1>
-            <div className="info-container">
-                <div className="info">
-                    <h2>Profile information</h2>
-                    <div className="underline" />
-                    <table>
-                        <thead className="thead">
-                            <tr>
-                                <th className="column title" colSpan="1">Fields</th>
-                                <th className="column date" colSpan="1">User info</th>
-                            </tr>
-                        </thead>
-
-                        <tr>
-                            <td> <p className="profile-info-input">User name</p> </td>
-                            <td> <p className="profile-line-data"> {name}</p> </td>
-                        </tr>
-
-                        <tr>
-                            <td> <p className="profile-info-input">Email</p> </td>
-                            <td> <p className="profile-line-data">{email}</p> </td>
-                        </tr>
-                    </table>
-
-                </div>
-
-
-            </div >
-            
-            <Footer></Footer>
+    <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{name}</td>
+          <td>{email}</td>
+        </tr>
+      </tbody>
+    </Table>
+        <div className="mb-2">
+        <Button variant="dark" size="lg" onClick={()=>{navigate("/UpdateProfile")}}>Update Profile</Button>{' '}
+            </div>
+        <Footer></Footer>
         </div >
     )
-                }
+}

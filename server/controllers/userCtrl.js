@@ -75,4 +75,74 @@ class UsersController {
     }
   }
 
+//Profile controllers
+
+//View profile
+export const getUser = (req, res) => {
+  User.find().then(
+    (user) => {
+      res.status(200).json(user);
+    }
+  ).catch(
+    (error) => {
+      res.status(404).json({
+       error: {
+         message: "Unable to retrieve profile.",
+         ...error
+       }
+      });
+    }
+  );
+};
+
+
+  // Modify user
+export const modifyUser = async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password || user.password;
+    }
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      token: generateToken(updatedUser.id),
+
+    })
+  }
+}
+
+// Delete user
+export const deleteUser = (req, res) => {
+  User.findOne({ _id: req.params.id })
+  .then((user) => {
+      if (!user) {
+          res.status(404).json({message: "User not found."});
+      }
+      else {
+          const token = req.headers.authorization.split(' ')[1];
+          const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+          const userId = decodedToken.userId;
+
+          if (user.userId !== userId) {
+              res.status(401).json({message: "You're not authorized to delete this user."});
+          }
+          else {
+            User.findByIdAndDelete(req._id)
+              .then(() => res.status(200).json({ message: "User deleted." }))
+              .catch(error => res.status(400).json({ message: error.message }));
+          }
+      }
+
+  })
+  .catch(error => res.status(500).json({ message: error.message }));
+};
+
+
 export default UsersController;

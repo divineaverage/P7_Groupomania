@@ -15,6 +15,10 @@ function app() {
         <Route path="/CreatePost" element={<AddPostForm />} />
         <Route path="/PostsList" element={<PostsList />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/UpdateProfile" element={<Profile />} />
+        <Route path="/About" element={<Profile />} />
+        <Route path="/Legal" element={<Profile />} />
+        <Route path="/Help" element={<Profile />} />
         </Routes>
     </BrowserRouter>
   );

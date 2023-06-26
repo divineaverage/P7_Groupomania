@@ -1,8 +1,20 @@
 @import "../../sass/index.scss";
+
 .footer-box {
+  position: fixed;
+  .list-group-horizontal {
+    border-style: groove none none none;
     position: fixed;
-    left: 30px;
-    right: 30px;
-    bottom: 30px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 2% 0 2% 2%;
     text-align: center;
+    background-color: white;
+    .footer-link {
+      text-decoration: none;
+      color: black;
+    }
   }
+}
+

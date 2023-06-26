@@ -75,6 +75,7 @@ import "../../sass/app.scss";
           )
         )}
         <PostButton></PostButton>
+        <div className="spacer"></div>
         <Footer></Footer>
       </>
     );
