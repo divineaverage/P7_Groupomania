@@ -52,8 +52,9 @@ const PostCard = ( post ) => {
   };
 
   return (
-    <Card style={{ maxWidth: '40rem' }}>
-      <Card.Img variant="top" src={imageUrl} />
+    <Card className="card" style={{ maxWidth: '40rem' }}>
+      <div className="card-image-container">
+      <Card.Img className="card-image" variant="top" src={imageUrl} /></div>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>

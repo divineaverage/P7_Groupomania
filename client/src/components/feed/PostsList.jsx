@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setPosts } from "../store/postsSlice"
 import "../../sass/app.scss"
@@ -16,6 +16,10 @@ import "../../sass/app.scss";
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
+    // const [items, setItems] = useState([]);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [error, setError] = useState(null);
+    // const [page, setPage] = useState(1);
     
 
     useEffect (() => {
@@ -25,13 +29,18 @@ import "../../sass/app.scss";
     }, [token]);
   
     const getPosts = async () => {
+      // setIsLoading(true);
+      // setError(null);
       console.log("!!!!!"+token)
+
       const response = await fetch("http://localhost:8080/api/posts", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
+        // setItems(prevItems => [...prevItems, ...data]);
+        // setPage(prevPage => prevPage + 1);
         dispatch(setPosts({ posts: data }));
         }
     };
@@ -43,7 +52,7 @@ import "../../sass/app.scss";
   return (
       <>
       <NavBar></NavBar>
-        {posts.map(
+        {[...posts].reverse().map(
           ({
             _id,
             userId,

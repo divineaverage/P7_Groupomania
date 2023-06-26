@@ -3,3 +3,22 @@
 .date {
     font-size: $small-font-size
 }
+
+.card {
+    margin: 20px 25% 20px 25%;
+}
+
+.card-image-container {
+    max-width: 50rem;
+    .card-image {
+        max-height: 30rem;
+        object-fit: cover;
+    }
+}
+
+
+.list-group-flush {
+    display: flex;
+    flex-direction: row;
+}
+
