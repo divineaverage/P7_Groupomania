@@ -78,7 +78,7 @@ class UsersController {
 
 //Profile controllers
 
-//View profile
+//Get profile
 export const getUser = (req, res) => {
   User.find({_id:req.params.id}).then(
     (user) => {
@@ -97,52 +97,69 @@ export const getUser = (req, res) => {
 };
 
 
-  // Modify user
+  // Modify profile
 export const modifyUser = async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  const isAdmin = decodedToken.isAdmin;
 
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password || user.password;
-    }
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      token: generateToken(updatedUser.id),
-
-    })
+  if (req.body.name == "" || req.body.firstname == "") {
+    return res
+      .status(400)
+      .json({ error: "Please enter new information." });
   }
+
+  models.User.findOne({
+    where: { id: req.params.id },
+  }).then((user) => {
+    if (user.id === userId || isAdmin === true) {
+      user
+        .update({
+          name: req.body.name,
+          firstname: req.body.firstname,
+        })
+        .then(() => res.status(200).json({ message: "Profile updated." }))
+        .catch((error) =>
+          res
+            .status(400)
+            .json({ error: "Profile could not be updated." })
+        );
+    }
+  });
 }
 
-// Delete user
+// Delete current user
 export const deleteUser = (req, res) => {
-  User.findOne({ _id: req.params.id })
-  .then((user) => {
-      if (!user) {
-          res.status(404).json({message: "User not found."});
-      }
-      else {
-          const token = req.headers.authorization.split(' ')[1];
-          const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-          const userId = decodedToken.userId;
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  const isAdmin = decodedToken.isAdmin;
 
-          if (user.userId !== userId) {
-              res.status(401).json({message: "You're not authorized to delete this user."});
-          }
-          else {
-            User.findByIdAndDelete(req._id)
-              .then(() => res.status(200).json({ message: "User deleted." }))
-              .catch(error => res.status(400).json({ message: error.message }));
-          }
-      }
-
+  models.User.findOne({
+    where: { id: req.params.id },
   })
-  .catch(error => res.status(500).json({ message: error.message }));
+    .then((user) => {
+      if (user.id === userId || isAdmin === true) {
+        user
+          .destroy()
+          .then(() => {
+            res.status(200).json({
+              message: "Profile deleted.",
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              error: "Could not delete user profile.",
+            });
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: "Could not delete user profile.",
+      });
+    });
 };
 
 

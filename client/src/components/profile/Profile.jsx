@@ -4,40 +4,45 @@ import Table from 'react-bootstrap/Table';
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
 import "../../sass/app.scss"
-import { useNavigate, Link } from "react-router-dom"
+import store from "../store/store"
+import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { addProfile, getProfileById } from "../store/profileSlice";
 
 
 
-export default function Profile() {
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [user, setUser] = useState(null);
-    const {token} = useSelector((state) => state.user);
-    const navigate = useNavigate();
- 
-    useEffect (() => {
-        if (!token) {
-          navigate ("/auth")
+const MyProfile = (userProfile) => {
+  const { authorId, name, email } = userProfile || {};
+  
+  console.log(userProfile);
+
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.user);
+  const profileState = useSelector((state) => state.profile)
+  const [profile, setProfile] = useState(getProfileById(
+    profileState
+  ))
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/profile/" + authorId, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          const profile = await response.json();
+          store.dispatch(addProfile(profile[0]));
+          setProfile(profile[0])
         }
-      }, [token]);
+      })
+      .catch(() => ({}));
+  }, [])
 
-      const getUser = async () => {
-        const response = await fetch(`http://localhost:8080/api/profile`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await response.json();
-        setUser(data);
-      };
-    
-      useEffect(() => {
-        getUser();
-      }, []); 
-    
-      if (!user) {
-        return null;
-      }
 
     return (
    
@@ -46,14 +51,14 @@ export default function Profile() {
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Username</th>
+          <th>User Name</th>
+          <th>Email</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{name}</td>
-          <td>{email}</td>
+          <td>{userProfile.name}</td>
+          <td>{userProfile.email}</td>
         </tr>
       </tbody>
     </Table>
@@ -64,3 +69,5 @@ export default function Profile() {
         </div >
     )
 }
+
+export default MyProfile

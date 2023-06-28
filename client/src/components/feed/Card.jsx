@@ -10,7 +10,7 @@ import "./card.scss";
 import { addProfile, getProfileById } from "../store/profileSlice";
 
 const PostCard = (post) => {
-  const { _id, authorId, name, caption, date, imageUrl, likes } = post || {};
+  const { authorId, name, caption, date, imageUrl, likes } = post || {};
   
   console.log(post);
 
@@ -44,7 +44,7 @@ const PostCard = (post) => {
 
   console.log(authorId)
 
-      console.log(profile)
+     
 
   // const [isLiked, updateLike] = useState(false);
   // const handleLike = () => {
