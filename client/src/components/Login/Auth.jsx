@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from 'react-bootstrap/Button';
 import NavBar from "./AuthNav";
 import Footer from "../shared/Footer";
 import "./auth.scss";
@@ -82,9 +83,9 @@ export default function Auth (props) {
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="btn btn-dark">
+                <Button type="submit" className="btn btn-dark">
                   Submit
-                </button>
+                </Button>
               </div>
             </div>
           </form>
