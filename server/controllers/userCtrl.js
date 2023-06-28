@@ -19,6 +19,7 @@ class UsersController {
       bcrypt.hash(req.body.password, 10)
         .then((hash) => {
             const user = new User({
+                name: req.body.name,
                 email: req.body.email,
                 password: hash
             });
@@ -79,7 +80,7 @@ class UsersController {
 
 //View profile
 export const getUser = (req, res) => {
-  User.find().then(
+  User.find({_id:req.params.id}).then(
     (user) => {
       res.status(200).json(user);
     }

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Auth (props) {
   const [authMode, setAuthMode] = useState("signin");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function Auth (props) {
     fetch("//localhost:8080/api/auth/" +(authMode==="signin"?"login": "signup"), {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({name, email, password}),
     })
     .then(res=>{
       if (res.ok) return res
@@ -107,12 +108,12 @@ export default function Auth (props) {
             </a>
           </div>
           <div className="form-group mt-3">
-            <label>Username</label>
+            <label>Full name</label>
             <input
               type="name"
               className="form-control mt-1"
-              placeholder="e.g JaneDoe"
-              // onChange={()}
+              placeholder="e.g Jane Doe"
+              onChange={(e)=>setName(e.target.value)}
             />
           </div>
           <div className="form-group mt-3">

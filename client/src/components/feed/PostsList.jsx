@@ -16,61 +16,39 @@ import "../../sass/app.scss";
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
-    // const [items, setItems] = useState([]);
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [error, setError] = useState(null);
-    // const [page, setPage] = useState(1);
+  
     
 
     useEffect (() => {
       if (!token) {
         navigate ("/auth")
+      } else {
+        getPosts();
       }
     }, [token]);
   
     const getPosts = async () => {
-      // setIsLoading(true);
-      // setError(null);
-      console.log("!!!!!"+token)
 
+      console.log("!!!!!"+token)
+      
       const response = await fetch("http://localhost:8080/api/posts", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
-        // setItems(prevItems => [...prevItems, ...data]);
-        // setPage(prevPage => prevPage + 1);
+
         dispatch(setPosts({ posts: data }));
         }
     };
-  
-    useEffect(() => {
-      getPosts();
-    }, []);
     
   return (
       <>
       <NavBar></NavBar>
         {[...posts].reverse().map(
-          ({
-            _id,
-            userId,
-            name,
-            caption,
-            imageUrl,
-            date,
-            likes,
-          }) => (
+          (post) => (
             <Card
-              key={_id}
-              postId={_id}
-              postUserId={userId}
-              name={name}
-              caption={caption}
-              date={date}
-              imageUrl={imageUrl}
-              likes={likes}
+            {...post}
             />
           )
         )}
