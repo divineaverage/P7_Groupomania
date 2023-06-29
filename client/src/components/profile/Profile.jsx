@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import NavBar from "../shared/Nav"
 import Footer from "../shared/Footer"
 import "../../sass/app.scss"
-import store from "../store/store"
+import { store } from "../store/store"
 import { setLogin } from "../store/userSlice";
 import { getProfileById, addProfile } from "../store/profileSlice";
 import "./profile.scss"
-
 
 
 const MyProfile = () => {

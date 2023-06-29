@@ -1,6 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import posts from './postsSlice'
 import user from './userSlice'
@@ -16,10 +25,17 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, reducer)
-const store = configureStore(persistedReducer)
-const persistor = persistStore(store)
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) ({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+})
+export const persistor = persistStore(store)
 
-export default { store, persistor }
+export default store
 
 
 
