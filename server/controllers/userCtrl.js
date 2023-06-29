@@ -99,10 +99,6 @@ export const getUser = (req, res) => {
 
   // Modify profile
 export const modifyUser = async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "TOKEN_SECRET");
-  const userId = decodedToken.userId;
-  const isAdmin = decodedToken.isAdmin;
 
   if (req.body.name == "" || req.body.firstname == "") {
     return res
@@ -110,10 +106,11 @@ export const modifyUser = async (req, res) => {
       .json({ error: "Please enter new information." });
   }
 
-  models.User.findOne({
-    where: { id: req.params.id },
+  User.findOne({
+    _id: req.params.id,
   }).then((user) => {
-    if (user.id === userId || isAdmin === true) {
+    if (!user) throw new Error()
+    if (user._id === req.params.id) {
       user
         .update({
           name: req.body.name,
@@ -126,7 +123,11 @@ export const modifyUser = async (req, res) => {
             .json({ error: "Profile could not be updated." })
         );
     }
-  });
+  }).catch((error) =>
+  res
+    .status(400)
+    .json({ error: "Profile could not be updated." })
+);
 }
 
 // Delete current user
@@ -136,7 +137,7 @@ export const deleteUser = (req, res) => {
   const userId = decodedToken.userId;
   const isAdmin = decodedToken.isAdmin;
 
-  models.User.findOne({
+  User.findOne({
     where: { id: req.params.id },
   })
     .then((user) => {

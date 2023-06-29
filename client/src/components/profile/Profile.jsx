@@ -6,21 +6,18 @@ import Footer from "../shared/Footer"
 import "../../sass/app.scss"
 import store from "../store/store"
 import { setLogin } from "../store/userSlice";
-import { getProfileById } from "../store/profileSlice";
+import { getProfileById, addProfile } from "../store/profileSlice";
 import "./profile.scss"
 
 
 
 const MyProfile = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const userState = useSelector((state) => state.user)
+  const profileState = getProfileById(store.getState().profile, userState.userId) || {};
+  console.log(profileState)
+  const [name, setName] = useState(profileState.name);
+  const [email, setEmail] = useState(profileState.email);
   const [password, setPassword] = useState("");
-  const [authorId, setAuthorId] = useState("");
-  const profileState = useSelector((state) => state.profile);
-  const [profile, setProfile] = useState(getProfileById(
-    profileState,
-    authorId
-  ))
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -36,9 +33,9 @@ const MyProfile = () => {
 
   const handleFormSubmission = (e) => {
     e.preventDefault()
-    fetch("http://localhost:8080/api/profile/" + authorId, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
+    fetch("http://localhost:8080/api/profile/" + profileState._id, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json", Authorization: "Bearer "+userState.token},
       body: JSON.stringify({name, email, password}),
     })
     .then(res=>{
@@ -49,6 +46,7 @@ const MyProfile = () => {
     .then(res=>res.json()).then( async user=>{
       console.log(user);
       await store.dispatch(setLogin({user:user.userId, token:user.token}));
+      store.dispatch(addProfile(user))
     }).catch(()=>{
       console.warn("Unable to update.")
     })
@@ -59,20 +57,16 @@ const MyProfile = () => {
     <div className="App">
       <NavBar></NavBar>
       <form
-        onSubmit={(e) => {
-          handleFormSubmission(e);
-        }}
+        onSubmit={handleFormSubmission}
       >        
         <h1> Profile </h1>
         <label>Name:</label>
         <br />
         <input
           type="text"
-          value={name}
+          defaultValue={name}
           required
-          onChange={(e) => {
-            handleChange(e);
-          }}
+          onChange={handleChange}
         />
         <br />
 
@@ -80,11 +74,9 @@ const MyProfile = () => {
         <br />
         <input
           type="email"
-          value={email}
+          defaultValue={email}
           required
-          onChange={(e) => {
-            handleEmailChange(e);
-          }}
+          onChange={handleEmailChange}
         />
         <br />
 
@@ -92,19 +84,17 @@ const MyProfile = () => {
         <br />
         <input
           type="password"
-          value={password}
+          defaultValue={password}
           required
-          onChange={(e) => {
-            handlePasswordChange(e);
-          }}
+          onChange={handlePasswordChange}
         />
         <br />
         <div className="buttons">
-        <Button type="update" className="btn btn-dark">
+        <Button type="submit" className="btn btn-dark">
                   Update
                 </Button>
         <div className="red-button">
-        <Button type="delete" className="btn btn-dark">
+        <Button className="btn btn-dark">
                   Delete Account
                 </Button>
                 </div>

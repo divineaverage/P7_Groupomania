@@ -5,6 +5,7 @@ import Footer from "../shared/Footer";
 import "./auth.scss";
 import "../../sass/app.scss";
 import store from "../store/store"
+import { addProfile } from "../store/profileSlice"
 import { setLogin } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -34,6 +35,7 @@ export default function Auth (props) {
     .then(res=>res.json()).then( async user=>{
       console.log(user);
       await store.dispatch(setLogin({user:user.userId, token:user.token}));
+      store.dispatch(addProfile(user));
       navigate("/PostsList");
     }).catch(()=>{
       console.warn("Login error")
