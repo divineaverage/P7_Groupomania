@@ -130,37 +130,37 @@ export const modifyUser = async (req, res) => {
 );
 }
 
-// Delete current user
+// // Delete current user
 export const deleteUser = (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-  const userId = decodedToken.userId;
-  const isAdmin = decodedToken.isAdmin;
+//   const token = req.headers.authorization.split(" ")[1];
+//   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+//   const userId = decodedToken.userId;
+//   const isAdmin = decodedToken.isAdmin;
 
-  User.findOne({
-    where: { id: req.params.id },
-  })
-    .then((user) => {
-      if (user.id === userId || isAdmin === true) {
-        user
-          .destroy()
-          .then(() => {
-            res.status(200).json({
-              message: "Profile deleted.",
-            });
-          })
-          .catch((error) => {
-            res.status(400).json({
-              error: "Could not delete user profile.",
-            });
-          });
-      }
-    })
-    .catch((error) => {
-      res.status(400).json({
-        error: "Could not delete user profile.",
-      });
-    });
+//   User.findOne({
+//     where: { id: req.params.id },
+//   })
+//     .then((user) => {
+//       if (user.id === userId || isAdmin === true) {
+//         user
+//           .destroy()
+//           .then(() => {
+//             res.status(200).json({
+//               message: "Profile deleted.",
+//             });
+//           })
+//           .catch((error) => {
+//             res.status(400).json({
+//               error: "Could not delete user profile.",
+//             });
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       res.status(400).json({
+//         error: "Could not delete user profile.",
+//       });
+//     });
 };
 
 

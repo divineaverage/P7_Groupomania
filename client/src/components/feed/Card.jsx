@@ -10,7 +10,7 @@ import "./card.scss";
 import { addProfile, getProfileById } from "../store/profileSlice";
 
 const PostCard = (post) => {
-  const { authorId, name, caption, date, imageUrl, likes } = post || {};
+  const { authorId, caption, date, imageUrl, likes } = post || {};
   
   console.log(post);
 
@@ -42,26 +42,8 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
-  console.log(authorId)
 
-     
-
-  // const [isLiked, updateLike] = useState(false);
-  // const handleLike = () => {
-  //   let currentLikedPosts = props.likedPosts;
-  //   if (!isLiked) {
-  //     updateLike(true);
-  //     if (!currentLikedPosts.includes(_id))
-  //       props.updateLikedPosts([...currentLikedPosts, _id]);
-  //   } else {
-  //     updateLike(false);
-  //     if (currentLikedPosts.includes(_id))
-  //       props.updateLikedPosts(
-  //         currentLikedPosts.filter((post) => post !== _id)
-  //       );
-  //   }
-  // };
-console.log("about to render!!!")
+console.log("rendering cards")
   return (
     <Card className="card" style={{ maxWidth: "40rem" }}>
       <div className="card-image-container">
