@@ -5,10 +5,10 @@ import NavBar from "../shared/Nav";
 import Footer from "../shared/Footer";
 import "../../sass/app.scss";
 import { store } from "../store/store";
-import { setLogin } from "../store/userSlice";
 import { getProfileById, addProfile } from "../store/profileSlice";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
+import DeleteButton from "./DeleteButton"
 
 const MyProfile = () => {
   const userState = useSelector((state) => state.user);
@@ -31,22 +31,22 @@ const MyProfile = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/profile/" + userState.userId, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const profile = await response.json();
-          store.dispatch(addProfile(profile[0]));
-          setProfile(profile[0])
-        }
-      })
-      .catch(() => ({}));
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/api/profile/" + userState.userId, {
+  //     method: "GET",
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //     .then(async (response) => {
+  //       if (response.ok) {
+  //         const profile = await response.json();
+  //         store.dispatch(addProfile(profile[0]));
+  //         setProfile(profile[0])
+  //       }
+  //     })
+  //     .catch(() => ({}));
+  // }, [])
   
-  console.log(userState.userId)
+  // console.log(userState.userId)
   
 
   const handleChange = (e) => {
@@ -61,11 +61,14 @@ const MyProfile = () => {
     setPassword(e.target.value);
   };
 
+
+  
+
   // const handleFormSubmission = (e) => {
   //   e.preventDefault();
   //   fetch("http://localhost:8080/api/profile/" + profileState.userId, {
-  //     method: "PUT",
   //     headers: {
+  //       method: "PUT",
   //       "Content-Type": "application/json",
   //       Authorization: "Bearer " + userState.token,
   //     },
@@ -99,7 +102,8 @@ const MyProfile = () => {
         <br />
         <input
           type="text"
-          defaultValue={profile.name}
+          // defaultValue={profile.name}
+          defaultValue="name"
           required
           onChange={handleChange}
         />
@@ -109,7 +113,8 @@ const MyProfile = () => {
         <br />
         <input
           type="email"
-          defaultValue={profile.email}
+          // defaultValue={profile.email}
+          defaultValue="email"
           required
           onChange={handleEmailChange}
         />
@@ -128,9 +133,7 @@ const MyProfile = () => {
           <Button type="submit" className="btn btn-dark">
             Update
           </Button>
-          <div className="red-button">
-            <Button className="btn btn-dark">Delete Account</Button>
-          </div>
+          <DeleteButton></DeleteButton>
         </div>
       </form>
       <Footer></Footer>

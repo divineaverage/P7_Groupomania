@@ -49,7 +49,7 @@ app.post('/api/posts/:id/like', auth, likePost);
 
 //Profile functions
 app.get('/api/profile/:id', auth, getUser);
-app.put('/api/profile/:id', auth, multer, modifyUser);
+app.put('/api/profile/:id', auth, modifyUser);
 app.delete('/api/posts/:id', auth, deleteUser);
 
 export default app;
