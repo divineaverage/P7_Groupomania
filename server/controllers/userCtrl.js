@@ -145,13 +145,12 @@ export const deleteUser = (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const userId = decodedToken.userId;
-  const isAdmin = decodedToken.isAdmin;
 
   User.findOne({
     where: { id: req.params.id },
   })
     .then((user) => {
-      if (user.id === userId || isAdmin === true) {
+      if (user.id === userId) {
         user
           .destroy()
           .then(() => {

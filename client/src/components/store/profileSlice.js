@@ -9,10 +9,13 @@ const slice = createSlice({
     addProfile: (state, action) => {
         state[action.payload._id] = action.payload
     },
+    deleteProfile: (state, action) => {
+      state.splice(action.payload, 0)
+      }
   },
 });
 
-export const { addProfile } =
+export const { addProfile, deleteProfile } =
   slice.actions;
 
 

@@ -31,14 +31,14 @@ const postsSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
-    postUpdated(state, action) {
-      const { id, title, content } = action.payload
-      const existingPost = state.posts.find(post => post.id === id)
-      if (existingPost) {
-        existingPost.title = title
-        existingPost.content = content
-      }
-    }
+    // postUpdated(state, action) {
+    //   const { id, title, content } = action.payload
+    //   const existingPost = state.posts.find(post => post.id === id)
+    //   if (existingPost) {
+    //     existingPost.title = title
+    //     existingPost.content = content
+    //   }
+    // }
   }
 })
 

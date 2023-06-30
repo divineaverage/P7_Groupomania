@@ -25,7 +25,7 @@ const MyProfile = () => {
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log(profileState)
+  console.log(userState)
 
 
   useEffect(() => {
@@ -34,20 +34,20 @@ const MyProfile = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/profile/" + profileState.userId, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const profile = await response.json();
-          store.dispatch(addProfile(profile[0]));
-          setProfile(profile[0])
-        }
-      })
-      .catch(() => ({}));
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/api/profile/" + profileState.userId, {
+  //     method: "GET",
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //     .then(async (response) => {
+  //       if (response.ok) {
+  //         const profile = await response.json();
+  //         store.dispatch(addProfile(profile[0]));
+  //         setProfile(profile[0])
+  //       }
+  //     })
+  //     .catch(() => ({}));
+  // }, [])
   
   console.log(userState.userId)
   
@@ -103,7 +103,7 @@ const MyProfile = () => {
         <br />
         <input
           type="text"
-          defaultValue={profile.name}
+          // defaultValue={profile.name}
           required
           onChange={handleChange}
         />
@@ -113,7 +113,7 @@ const MyProfile = () => {
         <br />
         <input
           type="email"
-          defaultValue={profile.email}
+          // defaultValue={profile.email}
           required
           onChange={handleEmailChange}
         />

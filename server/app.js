@@ -8,7 +8,7 @@ import multer from './middleware/multer-config.js';
 import path from "path";
 import {fileURLToPath} from "url";
 import {config} from "dotenv";
-import { createPost, deletePost, getAllPosts, likePost, modifyPost } from './controllers/postCtrl.js';
+import { createPost, getAllPosts, likePost, modifyPost } from './controllers/postCtrl.js';
 import { deleteUser, getUser, modifyUser } from './controllers/userCtrl.js';
 const {MONGODBURL} = config().parsed;
 const __filename = fileURLToPath(import.meta.url);
@@ -43,9 +43,8 @@ app.post("/api/auth/login", usersController.login)
 //Post functions
 app.post('/api/posts', auth, multer, createPost);
 app.put('/api/posts/:id', auth, multer, modifyPost);
-app.delete('/api/posts/:id', auth, deletePost);
 app.get('/api/posts', auth, getAllPosts);
-app.post('/api/posts/:id/like', auth, likePost);
+// app.post('/api/posts/:id/like', auth, likePost);
 
 //Profile functions
 app.get('/api/profile/:id', auth, getUser);
