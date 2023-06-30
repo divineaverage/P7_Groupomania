@@ -5,6 +5,7 @@ import NavBar from "../shared/Nav";
 import Footer from "../shared/Footer";
 import "../../sass/app.scss";
 import { store } from "../store/store";
+import { setLogin } from "../store/userSlice";
 import { getProfileById, addProfile } from "../store/profileSlice";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
@@ -19,10 +20,12 @@ const MyProfile = () => {
   const [password, setPassword] = useState("");
   const [profile, setProfile] = useState(getProfileById(
     profileState,
-    userState.userId
+    profileState.userId
   ))
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
+
+  console.log(profileState)
 
 
   useEffect(() => {
@@ -31,22 +34,22 @@ const MyProfile = () => {
     }
   }, [token]);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/api/profile/" + userState.userId, {
-  //     method: "GET",
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   })
-  //     .then(async (response) => {
-  //       if (response.ok) {
-  //         const profile = await response.json();
-  //         store.dispatch(addProfile(profile[0]));
-  //         setProfile(profile[0])
-  //       }
-  //     })
-  //     .catch(() => ({}));
-  // }, [])
+  useEffect(() => {
+    fetch("http://localhost:8080/api/profile/" + profileState.userId, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          const profile = await response.json();
+          store.dispatch(addProfile(profile[0]));
+          setProfile(profile[0])
+        }
+      })
+      .catch(() => ({}));
+  }, [])
   
-  // console.log(userState.userId)
+  console.log(userState.userId)
   
 
   const handleChange = (e) => {
@@ -62,35 +65,33 @@ const MyProfile = () => {
   };
 
 
-  
-
-  // const handleFormSubmission = (e) => {
-  //   e.preventDefault();
-  //   fetch("http://localhost:8080/api/profile/" + profileState.userId, {
-  //     headers: {
-  //       method: "PUT",
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + userState.token,
-  //     },
-  //     body: JSON.stringify({ name, email, password }),
-  //   })
-  //     .then((res) => {
-  //       if (res.ok) return res;
-  //       console.log(res);
-  //       throw new Error();
-  //     })
-  //     .then((res) => res.json())
-  //     .then(async (user) => {
-  //       console.log(user);
-  //       await store.dispatch(
-  //         setLogin({ user: user.userId, token: user.token })
-  //       );
-  //       store.dispatch(addProfile(user));
-  //     })
-  //     .catch(() => {
-  //       console.warn("Unable to update.");
-  //     });
-  // };
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:8080/api/profile/" + profileState.userId, {
+      headers: {
+        method: "PUT",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userState.token,
+      },
+      body: JSON.stringify({ name, email, password }),
+    })
+      .then((res) => {
+        if (res.ok) return res;
+        console.log(res);
+        throw new Error();
+      })
+      .then((res) => res.json())
+      .then(async (user) => {
+        console.log(user);
+        await store.dispatch(
+          setLogin({ user: user.userId, token: user.token })
+        );
+        store.dispatch(addProfile(user));
+      })
+      .catch(() => {
+        console.warn("Unable to update.");
+      });
+  };
 
   return (
     <div className="App">
@@ -102,8 +103,7 @@ const MyProfile = () => {
         <br />
         <input
           type="text"
-          // defaultValue={profile.name}
-          defaultValue="name"
+          defaultValue={profile.name}
           required
           onChange={handleChange}
         />
@@ -113,8 +113,7 @@ const MyProfile = () => {
         <br />
         <input
           type="email"
-          // defaultValue={profile.email}
-          defaultValue="email"
+          defaultValue={profile.email}
           required
           onChange={handleEmailChange}
         />

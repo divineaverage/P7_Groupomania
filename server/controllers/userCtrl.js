@@ -66,8 +66,9 @@ class UsersController {
             { expiresIn: '24h' }
         );
         res.status(200).json({
-            userId: user._id,
-            token: token
+          ...user,
+          userId: user._id,
+          token: token,
         });
       }})
 
@@ -82,7 +83,11 @@ class UsersController {
 export const getUser = (req, res) => {
   User.find({_id:req.params.id}).then(
     (user) => {
-      res.status(200).json(user);
+      res.status(200).json({
+        ...user,
+        userId: user._id,
+        token: token,
+      });
     }
   ).catch(
     (error) => {
@@ -116,7 +121,12 @@ export const modifyUser = async (req, res) => {
           name: req.body.name,
           firstname: req.body.firstname,
         })
-        .then(() => res.status(200).json({ message: "Profile updated." }))
+        .then(() => res.status(200).json({ 
+          ...user,
+          userId: user._id,
+          token: token,
+          message: "Profile updated." 
+        }))
         .catch((error) =>
           res
             .status(400)
@@ -132,35 +142,38 @@ export const modifyUser = async (req, res) => {
 
 // // Delete current user
 export const deleteUser = (req, res) => {
-//   const token = req.headers.authorization.split(" ")[1];
-//   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-//   const userId = decodedToken.userId;
-//   const isAdmin = decodedToken.isAdmin;
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const userId = decodedToken.userId;
+  const isAdmin = decodedToken.isAdmin;
 
-//   User.findOne({
-//     where: { id: req.params.id },
-//   })
-//     .then((user) => {
-//       if (user.id === userId || isAdmin === true) {
-//         user
-//           .destroy()
-//           .then(() => {
-//             res.status(200).json({
-//               message: "Profile deleted.",
-//             });
-//           })
-//           .catch((error) => {
-//             res.status(400).json({
-//               error: "Could not delete user profile.",
-//             });
-//           });
-//       }
-//     })
-//     .catch((error) => {
-//       res.status(400).json({
-//         error: "Could not delete user profile.",
-//       });
-//     });
+  User.findOne({
+    where: { id: req.params.id },
+  })
+    .then((user) => {
+      if (user.id === userId || isAdmin === true) {
+        user
+          .destroy()
+          .then(() => {
+            res.status(200).json({
+              ...user,
+              userId: user._id,
+              token: token,
+              message: "Profile deleted.",
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              error: "Could not delete user profile.",
+            });
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({
+        error: "Could not delete user profile.",
+      });
+    });
 };
 
 
