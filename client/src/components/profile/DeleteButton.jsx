@@ -22,8 +22,8 @@ const DeleteButton = () => {
       e.preventDefault();
         fetch("http://localhost:8080/api/profile/" + profileState.userId, {
               method: "DELETE",
-              headers: {"Content-Type": "application/json"},
-              Authorization: "Bearer " + profileState.token,
+              headers: {"Content-Type": "application/json",
+            Authorization: "Bearer " + userState.token},
             })
             .then(async (response) => {
                 if (response.ok) {

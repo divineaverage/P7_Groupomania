@@ -64,8 +64,8 @@ const MyProfile = () => {
     e.preventDefault();
     fetch("http://localhost:8080/api/profile/" + profileState.userId, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        Authorization: "Bearer " + userState.token,
+        headers: {"Content-Type": "application/json",
+        Authorization: "Bearer " + userState.token},
     })
       .then((res) => {
         if (res.ok) return res;

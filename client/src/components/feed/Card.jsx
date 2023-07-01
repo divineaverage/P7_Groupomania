@@ -30,8 +30,8 @@ const PostCard = (post) => {
   useEffect(() => {
     fetch("http://localhost:8080/api/profile/" + authorId, {
       method: "GET",
-      headers: {"Content-Type": "application/json"},
-      Authorization: "Bearer " + profileState.token,
+      headers: {"Content-Type": "application/json",
+        Authorization: "Bearer " + profileState.token},
     })
       .then(async (response) => {
         if (response.ok) {
