@@ -49,6 +49,6 @@ app.get('/api/posts', auth, getAllPosts);
 //Profile functions
 app.get('/api/profile/:id', auth, getUser);
 app.put('/api/profile/:id', auth, modifyUser);
-app.delete('/api/posts/:id', auth, deleteUser);
+app.delete('/api/profile/:id', auth, deleteUser);
 
 export default app;

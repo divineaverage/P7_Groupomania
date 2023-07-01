@@ -18,14 +18,11 @@ const MyProfile = () => {
   const [name, setName] = useState(profileState.name);
   const [email, setEmail] = useState(profileState.email);
   const [password, setPassword] = useState("");
-  const [profile, setProfile] = useState(getProfileById(
-    profileState,
-    profileState.userId
-  ))
+  const [profile, setProfile] = useState(profileState)
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log(userState)
+  console.log(name)
 
 
   useEffect(() => {
@@ -48,8 +45,6 @@ const MyProfile = () => {
   //     })
   //     .catch(() => ({}));
   // }, [])
-  
-  console.log(userState.userId)
   
 
   const handleChange = (e) => {
@@ -103,7 +98,7 @@ const MyProfile = () => {
         <br />
         <input
           type="text"
-          // defaultValue={profile.name}
+          defaultValue={name}
           required
           onChange={handleChange}
         />
@@ -113,7 +108,7 @@ const MyProfile = () => {
         <br />
         <input
           type="email"
-          // defaultValue={profile.email}
+          defaultValue={email}
           required
           onChange={handleEmailChange}
         />
