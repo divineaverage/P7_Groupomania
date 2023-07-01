@@ -1,16 +1,15 @@
-import { Icon, useState, useEffect, props } from "react";
-import { FaThumbsUp } from "react-icons/fa";
-import { Card, Button } from "react-bootstrap";
+import { useState, useEffect, props } from "react";
+import { Card } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import store from "../store/store"
 import "../../sass/app.scss";
 import "./card.scss";
 import { addProfile, getProfileById } from "../store/profileSlice";
 
 const PostCard = (post) => {
-  const { authorId, caption, date, imageUrl, likes } = post || {};
+  const { authorId, caption, date, imageUrl } = post || {};
   
   console.log(post);
 
@@ -55,11 +54,6 @@ console.log("rendering cards")
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroup.Item className="date">{date}</ListGroup.Item>
-        <ListGroup.Item>
-          {/* <Button variant="dark" onClick={handleLike} disabled={isLiked}>
-            <FaThumbsUp />
-          </Button> */}
-        </ListGroup.Item>
       </ListGroup>
     </Card>
   );

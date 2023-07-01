@@ -22,7 +22,7 @@ const MyProfile = () => {
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log(name)
+  console.log(profile.name)
 
 
   useEffect(() => {
@@ -91,8 +91,7 @@ const MyProfile = () => {
   return (
     <div className="App">
       <NavBar></NavBar>
-      {/* <form onSubmit={handleFormSubmission}> */}
-      <form>
+      <form onSubmit={handleFormSubmission}>
         <h1> Profile </h1>
         <label>Name:</label>
         <br />

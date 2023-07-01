@@ -8,9 +8,8 @@ const postSchema = new mongoose.Schema(
     },
     authorId: {type: String, required: true},
     caption: { type: String, required: true },
-    likes: { type: Number, default: 0 },
+    readby: { type: String },
     date: { type: String, default: 0},
-    usersLiked: [String],
   },
   {
     timestamps: true,

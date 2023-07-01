@@ -16,13 +16,7 @@ import "../../sass/app.scss";
     const navigate = useNavigate();
     const {posts} = useSelector((state) => state.posts);
     const {token} = useSelector((state) => state.user);
-  
-  // const highlightUnread = useSelector(
-  //     (state) => state.poststates,
-  //     (_, read) => read,
-  //     (poststates, read) =>
-  //       poststates.filter((poststate) => poststate.read === read).length
-  //   )
+
 
     useEffect (() => {
       if (!token) {
