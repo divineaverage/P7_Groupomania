@@ -66,7 +66,6 @@ const MyProfile = () => {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         Authorization: "Bearer " + userState.token,
-      body: JSON.stringify({ name, email, password }),
     })
       .then((res) => {
         if (res.ok) return res;
