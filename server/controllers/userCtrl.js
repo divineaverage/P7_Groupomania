@@ -141,13 +141,13 @@ export const modifyUser = async (req, res) => {
 }
 
 // // Delete current user
-export const deleteUser = (req, res) => {
+export const deleteUser = async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const userId = decodedToken.userId;
 
   User.findOne({
-    where: { id: req.params.id },
+    where: { id: req.params._id },
   })
     .then((user) => {
       if (user.id === userId) {

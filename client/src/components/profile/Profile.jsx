@@ -22,7 +22,7 @@ const MyProfile = () => {
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log(profile.name)
+  console.log(profile)
 
 
   useEffect(() => {
@@ -63,11 +63,9 @@ const MyProfile = () => {
   const handleFormSubmission = (e) => {
     e.preventDefault();
     fetch("http://localhost:8080/api/profile/" + profileState.userId, {
-      headers: {
         method: "PUT",
-        "Content-Type": "application/json",
+        headers: {"Content-Type": "application/json"},
         Authorization: "Bearer " + userState.token,
-      },
       body: JSON.stringify({ name, email, password }),
     })
       .then((res) => {
