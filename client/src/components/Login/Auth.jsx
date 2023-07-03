@@ -52,8 +52,8 @@ export default function Auth (props) {
       <div className="page-container">
         <NavBar></NavBar>
         <div className="title-bar">
-        <h1>Big words here</h1>
-        <h3>Smaller words here</h3>
+        <h1>Welcome to Groupomania</h1>
+        <h3>A place to share your favorite images with colleagues.</h3>
         </div>
         <div className="Auth-form-container">
           <form className="Auth-form" onSubmit={handleFormSubmission}>
