@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import "../middleware/auth.js"
+import "../middleware/auth.js";
 
 class UsersController {
   //Signup
@@ -136,30 +136,28 @@ export const modifyUser = async (req, res) => {
 
 // // Delete current user
 export const deleteUser = async (req, res) => {
-  
+  console.log(req.params.id)
   User.findOne({
-    where: { id: req.params._id },
+    _id: req.params.id,
   })
     .then((user) => {
-      if (user._id === userId) {
-        user
-          .destroy()
-          .then(() => {
-            res.status(200).json({
-              ...user,
-              userId: user._id,
-              message: "Profile deleted.",
-            });
-          })
-          .catch((error) => {
-            res.status(400).json({
-              error: "Could not delete user profile!!!",
-            });
+      console.log(user)
+        User.deleteOne({_id: req.params.id})
+        .then(() => {
+          res.status(200).json({
+            // ...user,
+            // userId: user._id,
+            message: "Profile deleted.",
           });
-      }
+        })
+        .catch((error) => {
+          res.status(400).json({
+            error: "Could not delete user profile!!!",
+          });
+        });
     })
     .catch((error) => {
-      res.status(400).json({
+      res.status(404).json({
         error: "Could not delete user profile.",
       });
     });

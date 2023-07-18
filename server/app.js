@@ -8,7 +8,7 @@ import multer from './middleware/multer-config.js';
 import path from "path";
 import {fileURLToPath} from "url";
 import {config} from "dotenv";
-import { createPost, getAllPosts, likePost, modifyPost } from './controllers/postCtrl.js';
+import { createPost, getAllPosts, modifyPost } from './controllers/postCtrl.js';
 import { deleteUser, getUser, modifyUser } from './controllers/userCtrl.js';
 const {MONGODBURL} = config().parsed;
 const __filename = fileURLToPath(import.meta.url);

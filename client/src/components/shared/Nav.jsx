@@ -21,7 +21,7 @@ function NavBar() {
         <Link to="/Profile" className="nav-link">Profile</Link>
       </Nav.Item>
       <Nav.Item>
-        <Link to="/" className="nav-link" >Log out</Link>
+        <Link to="/" className="nav-link">Log out</Link>
       </Nav.Item>
     </Nav>
       </div>

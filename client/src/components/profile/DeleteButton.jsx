@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { store } from "../store/store";
 import { getProfileById, deleteProfile } from "../store/profileSlice";
 import { useNavigate } from "react-router-dom";
+import { setLogout } from "../store/userSlice";
 
 
 const DeleteButton = () => {
@@ -26,9 +27,11 @@ const DeleteButton = () => {
             Authorization: "Bearer " + userState.token},
             })
             .then(async (response) => {
-                if (response.ok) {
-                    const profile = await response.json();
-                    store.dispatch(deleteProfile(profile[0]));
+              console.log(response)
+                if (response.status==200) {
+                  console.log("inside!")
+                    store.dispatch(setLogout())
+                    navigate("/auth")
                 }
             })
             .catch(() => ({}));
