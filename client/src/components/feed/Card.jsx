@@ -9,7 +9,7 @@ import "./card.scss";
 import { addProfile, getProfileById } from "../store/profileSlice";
 
 const PostCard = (post) => {
-  const { authorId, caption, date, imageUrl } = post || {};
+  const { authorId, name, caption, date, imageUrl } = post || {};
   
   console.log(post);
 
@@ -31,7 +31,7 @@ const PostCard = (post) => {
     fetch("http://localhost:8080/api/profile/" + authorId, {
       method: "GET",
       headers: {"Content-Type": "application/json",
-        Authorization: "Bearer " + profileState.token},
+      Authorization: "Bearer " + profileState.token},
     })
       .then(async (response) => {
         if (response.ok) {
@@ -43,8 +43,7 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
-
-console.log("rendering cards")
+console.log(profile, "is profile")
   return (
     <Card className="card" style={{ maxWidth: "40rem" }}>
       <div className="card-image-container">

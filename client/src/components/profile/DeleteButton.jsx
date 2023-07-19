@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { store } from "../store/store";
-import { getProfileById, deleteProfile } from "../store/profileSlice";
+import { getProfileById } from "../store/profileSlice";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../store/userSlice";
 

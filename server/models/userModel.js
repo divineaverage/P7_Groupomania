@@ -8,6 +8,7 @@ export const UserSchema = new Schema({
 		name: {type: String, required: true},
         email: {type: String, required: true, unique: true},
 		password: { type: String, required: true },	
+		lastLogin: {type: String, required: true, default: 0}
 	},);
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});

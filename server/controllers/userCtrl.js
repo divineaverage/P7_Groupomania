@@ -145,8 +145,6 @@ export const deleteUser = async (req, res) => {
         User.deleteOne({_id: req.params.id})
         .then(() => {
           res.status(200).json({
-            // ...user,
-            // userId: user._id,
             message: "Profile deleted.",
           });
         })
@@ -159,6 +157,33 @@ export const deleteUser = async (req, res) => {
     .catch((error) => {
       res.status(404).json({
         error: "Could not delete user profile.",
+      });
+    });
+};
+
+// Timestamp of user visit
+export const timeStamp = async (req, res) => {
+  console.log(req.params.id)
+  User.findOne({
+    _id: req.params.id,
+  })
+    .then((user) => {
+      console.log(user)
+        User.updateOne({_id: req.params.id}, {$set:{date:new Date()}})
+        .then(() => {
+          res.status(200).json({
+            message: "Timestamp assigned.",
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            error: "Could not assign timestamp.",
+          });
+        });
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: "Could not assign timestamp.",
       });
     });
 };
