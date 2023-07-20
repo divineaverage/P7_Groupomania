@@ -9,9 +9,11 @@ import "./card.scss";
 import { addProfile, getProfileById } from "../store/profileSlice";
 
 const PostCard = (post) => {
-  const { authorId, name, caption, date, imageUrl } = post || {};
+  const { authorId, caption, date, imageUrl } = post || {};
+  // const { name } = getUserById(authorId) || {};
   
   console.log(post);
+  
 
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.user);
@@ -43,7 +45,8 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
-console.log(profile, "is profile")
+  console.log(profile);
+
   return (
     <Card className="card" style={{ maxWidth: "40rem" }}>
       <div className="card-image-container">
