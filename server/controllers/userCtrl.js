@@ -100,39 +100,32 @@ export const getUser = (req, res) => {
 };
 
 // Modify profile
-export const modifyUser = async (req, res) => {
-  if (req.body.name == "" || req.body.firstname == "") {
-    return res.status(400).json({ error: "Please enter new information." });
-  }
-
-  User.findOne({
-    _id: req.params.id,
-  })
-    .then((user) => {
-      if (!user) throw new Error();
-      if (user._id === req.params.id) {
-        user
-          .update({
-            name: req.body.name,
-            firstname: req.body.firstname,
-          })
-          .then(() =>
-            res.status(200).json({
-              ...user,
-              userId: user._id,
-              token: token,
-              message: "Profile updated.",
-            })
-          )
-          .catch((error) =>
-            res.status(400).json({ error: "Profile could not be updated." })
-          );
-      }
-    })
-    .catch((error) =>
-      res.status(400).json({ error: "Profile could not be updated." })
-    );
-};
+// export const modifyUser = async (req, res) => {
+//   User.findOne({
+//     _id: req.params.id,
+//   })
+//   .then((user) => {
+//     console.log(user)
+//       User.db.collection.updateOne(
+//         {_id: req.params.id}, 
+//         {$set: req.body.name}, {$set: req.body.email}, {$set: req.body.password})
+//       .then(() => {
+//         res.status(200).json({
+//           message: "Profile updated.",
+//         });
+//       })
+//       .catch((error) => {
+//         res.status(400).json({
+//           error: "Could not update user profile.",
+//         });
+//       });
+//   })
+//   .catch((error) => {
+//     res.status(404).json({
+//       error: "Could not update user profile.",
+//     });
+//   });
+// };
 
 // // Delete current user
 export const deleteUser = async (req, res) => {
@@ -169,7 +162,7 @@ export const timeStamp = async (req, res) => {
   })
     .then((user) => {
       console.log(user)
-        User.updateOne({_id: req.params.id}, {$set:{date:new Date()}})
+        User.updateOne({_id: req.params.id}, {$set:{lastLogin:Date.now()}})
         .then(() => {
           res.status(200).json({
             message: "Timestamp assigned.",

@@ -9,7 +9,7 @@ import path from "path";
 import {fileURLToPath} from "url";
 import {config} from "dotenv";
 import { createPost, getAllPosts, modifyPost } from './controllers/postCtrl.js';
-import { deleteUser, getUser, modifyUser, timeStamp } from './controllers/userCtrl.js';
+import { deleteUser, getUser, timeStamp } from './controllers/userCtrl.js';
 const {MONGODBURL} = config().parsed;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,7 +47,7 @@ app.get('/api/posts', auth, getAllPosts);
 
 //Profile functions
 app.get('/api/profile/:id', auth, getUser);
-app.put('/api/profile/:id', auth, modifyUser);
+// app.put('/api/profile/:id', auth, modifyUser);
 app.delete('/api/profile/:id', auth, deleteUser);
 app.put('/api/profile/:id', auth, timeStamp)
 

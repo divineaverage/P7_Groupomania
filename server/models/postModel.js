@@ -8,7 +8,6 @@ const postSchema = new mongoose.Schema(
     },
     authorId: {type: String, required: true},
     caption: { type: String, required: true },
-    readby: { type: String },
     date: { type: String, default: new Date()},
   },
   {
