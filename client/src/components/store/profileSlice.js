@@ -11,7 +11,7 @@ const slice = createSlice({
     },
     deleteProfile: (state, action) => {
       state.splice(action.payload, 0)
-      }
+    },
   },
 });
 

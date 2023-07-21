@@ -5,8 +5,8 @@ import NavBar from "../shared/Nav";
 import Footer from "../shared/Footer";
 import "../../sass/app.scss";
 import { store } from "../store/store";
-// import { setLogin } from "../store/userSlice";
-import { getProfileById, addProfile } from "../store/profileSlice";
+import { setLogin } from "../store/userSlice";
+import { getProfileById } from "../store/profileSlice";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import DeleteButton from "./DeleteButton"
@@ -15,16 +15,18 @@ const MyProfile = () => {
   const userState = useSelector((state) => state.user);
   const profileState =
     getProfileById(store.getState().profile, userState._id) || {};
-  const [profile, setProfile] = useState(profileState)
+  const [profile, setProfile] = useState(profileState);
   const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   useEffect (() => {
     if (!token) {
       navigate ("/auth")
     } else {
       getProfile();
+      getLastLogin();
     }
   }, [token]);
 
@@ -38,6 +40,17 @@ const MyProfile = () => {
       const data = await response.json();
 
       dispatch(setProfile({ profile: data }));
+      }
+  };
+
+  const getLastLogin = async () => {
+    
+    const response = await fetch("http://localhost:8080/api/profile", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (response.ok) {
+      store.dispatch(setLogin({ lastLogin: new Date()}));
       }
   };
 
@@ -82,49 +95,16 @@ const MyProfile = () => {
   // };
 
   return (
-    <div className="App">
+    <div className="Profile">
       <NavBar></NavBar>
+      <div className="profiletext">
       <Stack gap={3}>
-      <div className="p-2">Name: {profile._doc.name}</div>
-      <div className="p-2">Email: {profile._doc.email}</div>
+      <div className="fieldname">Name: <span className="userinfo">{profile._doc.name}</span></div>
+      <div className="fieldname">Email: <span className="userinfo">{profile._doc.email}</span></div>
+      <div className="fieldname">Last login: <span className="userinfo">{profile._doc.lastLogin}</span></div>
+      <div className="blank"></div>
       </Stack>
-      {/* <form onSubmit={handleFormSubmission}>
-        <h1> Profile </h1>
-        <label>Name:</label>
-        <br />
-        <input
-          type="text"
-          defaultValue={name}
-          required
-          onChange={handleChange}
-        />
-        <br />
-
-        <label>Email:</label>
-        <br />
-        <input
-          type="email"
-          defaultValue={email}
-          required
-          onChange={handleEmailChange}
-        />
-        <br />
-
-        <label>Password:</label>
-        <br />
-        <input
-          type="password"
-          defaultValue="*****"
-          required
-          onChange={handlePasswordChange}
-        />
-        <br />
-        <div className="buttons">
-          <Button type="submit" className="btn btn-dark">
-            Update
-          </Button>
-        </div>
-      </form> */}
+      </div>
       <DeleteButton></DeleteButton>
       <Footer></Footer>
     </div>

@@ -18,6 +18,7 @@ const slice = createSlice({
     setLogin: (state, action) => {
       state.userId = action.payload.user;
       state.token = action.payload.token;
+      state.lastLogin = action.payload.lastLogin;
     },
     setLogout: (state) => {
       state.userId = null;

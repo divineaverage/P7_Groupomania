@@ -1,5 +1,6 @@
-import { useState, useEffect, props } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
+import Overlay from 'react-bootstrap/Overlay';
 import ListGroup from "react-bootstrap/ListGroup";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,16 +13,20 @@ const PostCard = (post) => {
   const { authorId, caption, date, imageUrl } = post || {};
   // const { name } = getUserById(authorId) || {};
   
-  console.log(post);
-  
-
+ 
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.user);
-  const profileState = useSelector((state) => state.profile)
+  const userState = useSelector((state) => state.user);
+  const profileState =
+    getProfileById(store.getState().profile, userState._id) || {};
   const [profile, setProfile] = useState(getProfileById(
     profileState,
     authorId
   ))
+  // const lastLogin = useState(getProfileById(
+  //   lastLogin
+  // ))
+  const [unread, setUnread] = useState(false)
 
   useEffect(() => {
     if (!token) {
@@ -45,6 +50,12 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
+  // function styleUnread() {
+  //   var lastLogin = profile.lastLogin;
+  //  if ((date.getTime()) > (lastLogin.getTime()))
+  //   setUnread(true)
+  // }
+
   console.log(profile);
 
   return (
@@ -53,6 +64,32 @@ const PostCard = (post) => {
         <Card.Img className="card-image" variant="top" src={imageUrl} />
       </div>
       <Card.Body>
+      <Overlay 
+      // onload={styleUnread()} 
+      unread={unread} placement="right">
+        {({
+          placement: _placement,
+          arrowProps: _arrowProps,
+          show: _show,
+          popper: _popper,
+          hasDoneInitialMeasure: _hasDoneInitialMeasure,
+          ...props
+        }) => (
+          <div
+            {...props}
+            style={{
+              position: 'absolute',
+              backgroundColor: 'rgba(255, 100, 100, 0.85)',
+              padding: '2px 10px',
+              color: 'white',
+              borderRadius: 3,
+              ...props.style,
+            }}
+          >
+            New post
+          </div>
+        )}
+      </Overlay>
         {profile&&<Card.Title>{profile.name}</Card.Title>}
         <Card.Text>{caption}</Card.Text>
       </Card.Body>
