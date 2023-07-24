@@ -84,7 +84,7 @@ export const getUser = (req, res) => {
   User.find({ _id: req.params.id })
     .then((user) => {
       res.status(200).json({
-        ...user,
+        ...user[0]._doc,
         userId: user._id,
         token: token,
       });

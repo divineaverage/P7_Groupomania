@@ -18,7 +18,6 @@ const slice = createSlice({
 export const { addProfile, deleteProfile } =
   slice.actions;
 
-
 export default slice.reducer
 
 export function getProfileById(state, id){

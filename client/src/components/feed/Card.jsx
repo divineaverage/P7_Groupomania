@@ -34,6 +34,8 @@ const PostCard = (post) => {
     }
   }, [token]);
 
+  console.log(profile);
+
   useEffect(() => {
     fetch("http://localhost:8080/api/profile/" + authorId, {
       method: "GET",
@@ -50,13 +52,12 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
-  // function styleUnread() {
-  //   var lastLogin = profile.lastLogin;
-  //  if ((date.getTime()) > (lastLogin.getTime()))
-  //   setUnread(true)
-  // }
+  function styleUnread() {
+    var lastLogin = profile.lastLogin;
+   if ((date.getTime()).toISOString() > (lastLogin.getTime()).toISOString())
+    setUnread(true)
+  }
 
-  console.log(profile);
 
   return (
     <Card className="card" style={{ maxWidth: "40rem" }}>
@@ -65,7 +66,7 @@ const PostCard = (post) => {
       </div>
       <Card.Body>
       <Overlay 
-      // onload={styleUnread()} 
+      onload={styleUnread()} 
       unread={unread} placement="right">
         {({
           placement: _placement,

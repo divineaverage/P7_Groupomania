@@ -46,7 +46,7 @@ import "../../sass/app.scss";
       <NavBar></NavBar>
         {[...posts].reverse().map(
           (post) => (
-            <Card
+            <Card key={post._id}
             {...post}
             />
           )
