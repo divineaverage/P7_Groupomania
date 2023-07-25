@@ -17,8 +17,10 @@ const PostCard = (post) => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.user);
   const userState = useSelector((state) => state.user);
-  const theProfile = getProfileById( store.getState().profile, userState._id );
-const [profile, setProfile] = useState( theProfile || {} );
+  const profileState =
+    getProfileById(store.getState().profile, userState._id) || {};
+    const theProfile = getProfileById( store.getState().profile, userState._id );
+    const [profile, setProfile] = useState( theProfile || {} );
   // const lastLogin = useState(getProfileById(
   //   lastLogin
   // ))
@@ -49,11 +51,8 @@ const [profile, setProfile] = useState( theProfile || {} );
   }, [])
 
   // function styleUnread() {
-  //   const lastLogin = profile.lastLogin;
-  //   const isoLastLogin = new Date(lastLogin);
-  //   const currentDate = Date.now();
-  //   const isoDate = new Date(currentDate);
-  //  if (isoDate.toISOString() > isoLastLogin.toISOString())
+  //   var lastLogin = profile.lastLogin;
+  //  if ((date.getTime()).toISOString() > (lastLogin.getTime()).toISOString())
   //   setUnread(true)
   // }
 
@@ -65,7 +64,7 @@ const [profile, setProfile] = useState( theProfile || {} );
       </div>
       <Card.Body>
       {/* <Overlay 
-      onload={styleUnread()} 
+      // onload={styleUnread()} 
       unread={unread} placement="right">
         {({
           placement: _placement,
