@@ -17,12 +17,8 @@ const PostCard = (post) => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.user);
   const userState = useSelector((state) => state.user);
-  const profileState =
-    getProfileById(store.getState().profile, userState._id) || {};
-  const [profile, setProfile] = useState(getProfileById(
-    profileState,
-    authorId
-  ))
+  const theProfile = getProfileById( store.getState().profile, userState._id );
+const [profile, setProfile] = useState( theProfile || {} );
   // const lastLogin = useState(getProfileById(
   //   lastLogin
   // ))
@@ -40,7 +36,7 @@ const PostCard = (post) => {
     fetch("http://localhost:8080/api/profile/" + authorId, {
       method: "GET",
       headers: {"Content-Type": "application/json",
-      Authorization: "Bearer " + profileState.token},
+      Authorization: "Bearer " + theProfile.token},
     })
       .then(async (response) => {
         if (response.ok) {
@@ -52,11 +48,14 @@ const PostCard = (post) => {
       .catch(() => ({}));
   }, [])
 
-  function styleUnread() {
-    var lastLogin = profile.lastLogin;
-   if ((date.getTime()).toISOString() > (lastLogin.getTime()).toISOString())
-    setUnread(true)
-  }
+  // function styleUnread() {
+  //   const lastLogin = profile.lastLogin;
+  //   const isoLastLogin = new Date(lastLogin);
+  //   const currentDate = Date.now();
+  //   const isoDate = new Date(currentDate);
+  //  if (isoDate.toISOString() > isoLastLogin.toISOString())
+  //   setUnread(true)
+  // }
 
 
   return (
@@ -65,7 +64,7 @@ const PostCard = (post) => {
         <Card.Img className="card-image" variant="top" src={imageUrl} />
       </div>
       <Card.Body>
-      <Overlay 
+      {/* <Overlay 
       onload={styleUnread()} 
       unread={unread} placement="right">
         {({
@@ -90,7 +89,7 @@ const PostCard = (post) => {
             New post
           </div>
         )}
-      </Overlay>
+      </Overlay> */}
         {profile&&<Card.Title>{profile.name}</Card.Title>}
         <Card.Text>{caption}</Card.Text>
       </Card.Body>

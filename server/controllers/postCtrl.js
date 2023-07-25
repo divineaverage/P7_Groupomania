@@ -4,7 +4,6 @@ import fs from "fs";
 // New post
 export const createPost = (req, res) => {
      const postObject = req.body;
-    console.log(req.body)
     delete postObject._id;
     delete postObject._userId;
 
